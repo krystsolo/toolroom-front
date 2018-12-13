@@ -1,0 +1,89 @@
+<div class="container">
+    <h3 style="margin-top: 30px">New employee Information </h3>
+    <form (ngSubmit)="onSubmit()">
+
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-form-field class="full-width">
+                    <input matInput id="username" placeholder="Username" type="text" name="username"
+                           required [(ngModel)]="newEmployee.userName">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-form-field class="full-width">
+                    <input matInput id="password" placeholder="Password" type="text" name="password"
+                           required [(ngModel)]="newEmployee.password">
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-form-field>
+                    <input matInput id="firstname" placeholder="Firstname" type="text" name="firstname"
+                           required [(ngModel)]="newEmployee.firstName">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-form-field>
+                    <input matInput id="surname" placeholder="Surname" type="text" name="surname"
+                           required [(ngModel)]="newEmployee.surName">
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-form-field>
+                    <input matInput id="phoneNumber" placeholder="Phone Number" type="tel" name="phoneNumber"
+                           required [(ngModel)]="newEmployee.phoneNumber">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-form-field>
+                    <input matInput id="email" placeholder="email" type="email" name="email"
+                            [(ngModel)]="newEmployee.email">
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-form-field>
+                    <input matInput id="workingGroup" placeholder="Working Group" type="text" name="workingGroup"
+                           [(ngModel)]="newEmployee.workingGroup">
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <mat-slide-toggle [color]="color" [checked]="checked" [disabled]="disabled"
+                                      [(ngModel)]="newEmployee.isActive" name="active">Active
+                    </mat-slide-toggle>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-grid-tile-header>Roles:</mat-grid-tile-header>
+                <mat-button-toggle-group name="roles" aria-label="Roles" multiple>
+                    <mat-button-toggle value="ADMIN">ADMIN</mat-button-toggle>
+                    <mat-button-toggle value="EMPLOYEE">EMPLOYEE</mat-button-toggle>
+                    <mat-button-toggle value="WAREHOUSEMAN">WAREHOUSEMAN</mat-button-toggle>
+                </mat-button-toggle-group>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-label>Image:</mat-label>
+        <input type="file" id="image" name="image" (change)="uploadImageService.fileChangeEvent($event)">
+        <br><br><br>
+
+
+        <mat-grid-list cols="20" rowHeight="60px">
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <button class="mat-primary" mat-raised-button type="submit">Add Employee</button>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                    <button class="mat-warn" mat-raised-button routerLink="/">Cancel</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+    </form>
+
+</div>

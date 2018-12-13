@@ -1,0 +1,77 @@
+<div class="container">
+    <h3 style="margin-top: 30px">New tool Information </h3>
+    <form (ngSubmit)="onSubmit()">
+
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-form-field class="full-width">
+                    <input matInput id="name" placeholder="Name" type="text" name="name"
+                           required [(ngModel)]="newTool.name">
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-form-field>
+                    <input matInput id="location" placeholder="Location" type="text" name="location"
+                            [(ngModel)]="newTool.location">
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-grid-tile-header>Unit of measure:</mat-grid-tile-header>
+                <mat-button-toggle-group name="unitOfMeasure" [(value)]="newTool.unitOfMeasure">
+                    <mat-button-toggle value="PCS">PCS</mat-button-toggle>
+                    <mat-button-toggle value="KG">KG</mat-button-toggle>
+                </mat-button-toggle-group>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-grid-tile-header>Category:</mat-grid-tile-header>
+                <mat-button-toggle-group *ngFor="let category of categories" name="category" aria-label="category"
+                                         [(ngModel)]="newTool.category">
+                    <mat-button-toggle [value]="category" [name]="category.name"></mat-button-toggle>
+                    <mat-button-toggle (click)="addCategory()" [value]="''">...</mat-button-toggle>
+                </mat-button-toggle-group>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-slide-toggle (change)="uniqueChange($event)"
+                                  [(ngModel)]="newTool.isUnique" name="unique">Unique
+                </mat-slide-toggle>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="2" [rowspan]="1" >
+                <mat-slide-toggle [checked]="isToReturnChecked" [disabled]="isToReturnDisable"
+                                  [(ngModel)]="newTool.isToReturn"  name="toReturn">To Return
+                </mat-slide-toggle>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <mat-form-field class="full-width">
+                    <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Warranty date"
+                           [(ngModel)]="newTool.warrantyDate" name="warrantyDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-label>Image:</mat-label>
+        <input type="file" id="image" name="image" (change)="uploadImageService.fileChangeEvent($event)">
+        <br><br><br>
+
+
+        <mat-grid-list cols="20" rowHeight="60px">
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <button class="mat-primary" mat-raised-button type="submit">Add Tool</button>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <button class="mat-warn" mat-raised-button routerLink="/">Cancel</button>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+    </form>
+
+</div>

@@ -1,0 +1,23 @@
+<mat-toolbar class="mat-primary">
+  <h2>TOOLROOM APP</h2>
+
+  <span class="align-right"></span>
+
+    <span [hidden]="!isLoggedIn">
+      <button mat-button [matMenuTriggerFor]="tools">Tools</button>
+  </span>
+    <mat-menu #tools="matMenu">
+        <a mat-menu-item routerLink="tools">Tool list</a>
+        <a mat-menu-item routerLink="tools/add">Add tool</a>
+    </mat-menu>
+
+  <span [hidden]="!isLoggedIn">
+      <button mat-button [matMenuTriggerFor]="employees">Employees</button>
+  </span>
+  <mat-menu #employees="matMenu">
+      <a mat-menu-item routerLink="employees">Employee list</a>
+      <a mat-menu-item routerLink="employees/add">Add employee</a>
+  </mat-menu>
+
+  <span [hidden]="!isLoggedIn"><a mat-button (click)="logout()">Logout</a></span>
+</mat-toolbar>
