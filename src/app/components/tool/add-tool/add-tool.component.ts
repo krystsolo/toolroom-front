@@ -31,6 +31,14 @@ export class AddToolComponent implements OnInit {
 
     ngOnInit() {
         this.minDate = new Date();
+        this.categoryService.getCategories().subscribe(
+            res => {
+                this.categories = res;
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 
     onSubmit() {
@@ -41,7 +49,7 @@ export class AddToolComponent implements OnInit {
                     category: null, minimalCount: 0, isUnique: false, isToReturn: true,
                     warrantyDate: null, location: '', isEnable: true, image: ''
                 };
-                this.router.navigate(['/employees/' + res.id]);
+                this.router.navigate(['/tools/' + res.id]);
             },
             error => {
                 console.log(error);
