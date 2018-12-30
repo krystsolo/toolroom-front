@@ -1,20 +1,25 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Employee} from '../models/employee';
 import {Tool} from '../models/tool';
+import {environment} from '../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ToolService {
 
-    baseUrl = 'http://localhost:8080/tools';
+    baseUrl = environment.baseUrl + 'tools';
 
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient) {
+    }
 
     getTools(): Observable<Tool[]> {
         return this.http.get<Tool[]>(this.baseUrl);
+    }
+
+    getTool(id: number): Observable<Tool> {
+        return this.http.get<Tool>(this.baseUrl + '/' + id);
     }
 
     addTool(tool: Tool) {
@@ -22,10 +27,17 @@ export class ToolService {
     }
 
     saveTool(id: number, tool: Tool) {
-        return this.http.put(this.baseUrl + id, tool);
+        return this.http.put<Tool>(this.baseUrl + '/' + id, tool);
     }
 
     deleteTool(id: number) {
-        this.http.delete(this.baseUrl + id);
+        this.http.delete(this.baseUrl + '/' + id).subscribe(
+            res => {
+                console.log(res);
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
 }
