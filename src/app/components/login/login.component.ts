@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService} from '../../services/auth/login.service';
 import {TokenStorage} from '../../services/auth/token-storage';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   credential = {'username': '', 'password': ''};
   private loggedIn = false;
 
-  constructor(private loginService: LoginService, private token: TokenStorage) {
+  constructor(private loginService: LoginService, private token: TokenStorage, private router: Router) {
   }
 
   onSubmit() {
@@ -32,6 +33,9 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
       this.loggedIn = this.token.isAuthenticated();
       console.log('is logged: ' + this.loggedIn);
+      if (this.loggedIn) {
+          this.router.navigate(['dashboard']);
+      }
   }
 
 }

@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {TokenStorage} from './token-storage';
+import {environment} from '../../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoginService {
 
-    baseUrl = 'http://localhost:8080/';
+    baseUrl = environment.baseUrl;
 
     constructor(private http: HttpClient, private token: TokenStorage) {
     }
