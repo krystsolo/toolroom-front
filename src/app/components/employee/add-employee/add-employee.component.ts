@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Output} from '@angular/core';
 import {Employee} from '../../../models/employee';
 import {EmployeeService} from '../../../services/employee.service';
 import {Router} from '@angular/router';
@@ -8,19 +8,18 @@ import {Router} from '@angular/router';
   templateUrl: './add-employee.component.html',
   styleUrls: ['./add-employee.component.css']
 })
-export class AddEmployeeComponent implements OnInit {
+export class AddEmployeeComponent {
 
-    newEmployee: Employee = {firstName: '', surName: '', password: '', userName: '', roles: [],
-        isActive: true, phoneNumber: null, email: '', image: '', workingGroup: ''};
+    @Output()
+    newEmployee: Employee = this.fillEmployeeFieldsWithDefaultValues();
 
   constructor(private employeeService: EmployeeService, private router: Router) { }
 
   onSubmit() {
       this.employeeService.addEmployee(this.newEmployee).subscribe(
           res => {
-              this.newEmployee = {firstName: '', surName: '', password: '', userName: '', roles: [],
-                  isActive: true, phoneNumber: null, email: '', image: '', workingGroup: ''};
-              this.router.navigate(['/employees/' + res.id]);
+              this.newEmployee = this.fillEmployeeFieldsWithDefaultValues();
+              this.router.navigate(['/employees/' + res.userName]);
           },
           error => {
                 console.log(error);
@@ -28,7 +27,8 @@ export class AddEmployeeComponent implements OnInit {
       );
   }
 
-  ngOnInit() {
-  }
-
+    fillEmployeeFieldsWithDefaultValues(): Employee {
+      return {firstName: '', surName: '', password: '', userName: '', roles: [],
+          isActive: true, phoneNumber: null, email: '', image: '', workingGroup: ''};
+    }
 }

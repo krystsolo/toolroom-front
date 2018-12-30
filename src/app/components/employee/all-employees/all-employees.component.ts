@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {Employee} from '../../../models/employee';
 import {EmployeeService} from '../../../services/employee.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {Router} from '@angular/router';
 
 
 @Component({
@@ -9,7 +10,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
     templateUrl: './all-employees.component.html',
     styleUrls: ['./all-employees.component.css']
 })
-export class AllEmployeesComponent implements OnInit, AfterViewInit {
+export class AllEmployeesComponent implements OnInit {
 
     private employees: Employee[];
     displayedColumns = ['id', 'image', 'userName', 'firstName', 'surName', 'phoneNumber',
@@ -20,11 +21,10 @@ export class AllEmployeesComponent implements OnInit, AfterViewInit {
     @ViewChild(MatSort) sort: MatSort;
 
     constructor(
-        private employeeService: EmployeeService) {
+        private employeeService: EmployeeService,
+        private router: Router) {
     }
 
-    ngAfterViewInit() {
-    }
 
     ngOnInit() {
         this.employeeService.getEmployees().subscribe(
@@ -50,6 +50,9 @@ export class AllEmployeesComponent implements OnInit, AfterViewInit {
     }
 
     onRowClicked(employee: Employee) {
+        // if user.roles.contain === ADMIN then employee-details
+        // else show simple employee info
+        this.router.navigate(['/employees/' + employee.userName]);
         console.log('Employee: ' + employee);
     }
 }
