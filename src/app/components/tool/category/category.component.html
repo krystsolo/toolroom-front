@@ -1,0 +1,30 @@
+<div class="container">
+    <h3 style="margin-top: 30px">Categories: </h3>
+
+    <form (ngSubmit)="onSubmit()">
+        <mat-form-field >
+            <input matInput type="text" placeholder="New category" [(ngModel)]="newCategory.name" name="newCategory">
+        </mat-form-field>
+        <button class="mat-primary" mat-button type="submit">
+            <mat-icon>send</mat-icon>
+        </button>
+    </form>
+
+    <mat-list>
+        <mat-list-item *ngFor="let category of categories">
+            {{category.name}}
+            <div style="position: absolute; right: 0;">
+                <button mat-icon-button (click)="update(category)">
+                    <mat-icon>create</mat-icon>
+                </button>
+                <button mat-icon-button (click)="delete(category)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </div>
+            <mat-divider></mat-divider>
+        </mat-list-item>
+
+    </mat-list>
+
+
+</div>
