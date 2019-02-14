@@ -31,13 +31,6 @@ export class ToolService {
     }
 
     deleteTool(id: number) {
-        this.http.delete(this.baseUrl + '/' + id).subscribe(
-            res => {
-                console.log(res);
-            },
-            error => {
-                console.log(error);
-            }
-        );
+        return this.http.delete(this.baseUrl + '/' + id);
     }
 }

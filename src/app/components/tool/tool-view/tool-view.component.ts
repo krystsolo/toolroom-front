@@ -2,9 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Tool} from '../../../models/tool';
 import {Category} from '../../../models/category';
 import {ToolService} from '../../../services/tool.service';
-import {CategoryService} from '../../../services/category.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MatSlideToggleChange} from '@angular/material';
 
 @Component({
     selector: 'app-tool-view',
@@ -15,7 +13,7 @@ export class ToolViewComponent implements OnInit {
 
     tool: Tool = {
         name: '', currentCount: 0, unitOfMeasure: 'PCS', allCount: 0,
-        category: null, minimalCount: 0, isUnique: false, isToReturn: true,
+        category: {name: ''}, minimalCount: 0, isUnique: false, isToReturn: true,
         warrantyDate: null, location: '', isEnable: true, image: ''
     };
 
@@ -44,7 +42,14 @@ export class ToolViewComponent implements OnInit {
     }
 
     deleteTool() {
-        this.toolService.deleteTool(this.tool.id);
+        this.toolService.deleteTool(this.tool.id).subscribe(
+            res => {
+                console.log(res);
+            },
+            err => {
+                console.log(err);
+            }
+        );
         location.reload();
     }
 }

@@ -10,6 +10,11 @@ import {EmployeeEditComponent} from './components/employee/employee-edit/employe
 import {DashboardComponent} from './components/dashboard/dashboard/dashboard.component';
 import {ToolViewComponent} from './components/tool/tool-view/tool-view.component';
 import {UpdateToolComponent} from './components/tool/update-tool/update-tool.component';
+import {CategoryComponent} from './components/tool/category/category.component';
+import {AddBuyOrderComponent} from './components/buy-order/add-buy-order/add-buy-order.component';
+import {AllBuyOrdersComponent} from './components/buy-order/all-buy-orders/all-buy-orders.component';
+import {BuyOrderViewComponent} from './components/buy-order/buy-order-view/buy-order-view.component';
+import {EditBuyOrderComponent} from './components/buy-order/edit-buy-order/edit-buy-order.component';
 
 const routes: Routes = [
     {
@@ -57,6 +62,26 @@ const routes: Routes = [
     {
         path: 'tools/:id/update',
         component: UpdateToolComponent
+    },
+    {
+        path: 'categories',
+        component: CategoryComponent
+    },
+    {
+        path: 'buyorders/add',
+        component: AddBuyOrderComponent
+    },
+    {
+        path: 'buyorders',
+        component: AllBuyOrdersComponent
+    },
+    {
+        path: 'buyorders/:id',
+        component: BuyOrderViewComponent
+    },
+    {
+        path: 'buyorders/:id/update',
+        component: EditBuyOrderComponent
     }
 ];
 

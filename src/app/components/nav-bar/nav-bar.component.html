@@ -4,11 +4,22 @@
   <span class="align-right"></span>
 
     <span [hidden]="!isLoggedIn">
+      <button mat-button [matMenuTriggerFor]="buyOrders">Buy Orders</button>
+  </span>
+    <mat-menu #buyOrders="matMenu">
+        <a mat-menu-item routerLink="buyorders">Buy order list</a>
+        <a mat-menu-item routerLink="buyorders/add">Add buy order</a>
+    </mat-menu>
+
+
+    <span [hidden]="!isLoggedIn">
       <button mat-button [matMenuTriggerFor]="tools">Tools</button>
   </span>
+
     <mat-menu #tools="matMenu">
         <a mat-menu-item routerLink="tools">Tool list</a>
         <a mat-menu-item routerLink="tools/add">Add tool</a>
+        <a mat-menu-item routerLink="categories">Categories</a>
     </mat-menu>
 
   <span [hidden]="!isLoggedIn">

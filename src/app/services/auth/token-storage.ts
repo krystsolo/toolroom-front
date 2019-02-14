@@ -24,11 +24,7 @@ export class TokenStorage {
     }
 
     public isAuthenticated(): boolean {
-        if (this.getToken() != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return this.getToken() != null;
     }
 
 }

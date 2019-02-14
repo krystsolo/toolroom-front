@@ -57,8 +57,8 @@
         <mat-grid-list cols="4" rowHeight="80px">
             <mat-grid-tile [colspan]="2" [rowspan]="1">
                 <mat-form-field>
-                    <mat-select placeholder="Category" [value]="tool.category" [disableRipple]="true" >
-                    </mat-select>
+                    <input matInput id="category" placeholder="Category" type="text" name="category" [readonly]="true"
+                            [value]="tool?.category ? tool.category.name : ''">
                 </mat-form-field>
             </mat-grid-tile>
 

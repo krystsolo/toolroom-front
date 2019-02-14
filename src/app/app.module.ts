@@ -15,11 +15,21 @@ import { AddEmployeeComponent } from './components/employee/add-employee/add-emp
 import {EmployeeService} from './services/employee.service';
 import { AllEmployeesComponent } from './components/employee/all-employees/all-employees.component';
 import { EmployeeViewComponent } from './components/employee/employee-view/employee-view.component';
-import { UpdateEmployeeComponent } from './components/employee/update-employee/update-employee.component';
 import { ToolListComponent } from './components/tool/tool-list/tool-list.component';
 import { AddToolComponent } from './components/tool/add-tool/add-tool.component';
 import { UpdateToolComponent } from './components/tool/update-tool/update-tool.component';
 import { ToolViewComponent } from './components/tool/tool-view/tool-view.component';
+import { EmployeeDataComponent } from './components/employee/employee-data/employee-data.component';
+import { EmployeeEditComponent } from './components/employee/employee-edit/employee-edit.component';
+import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
+import { CategoryComponent } from './components/tool/category/category.component';
+import { AddBuyOrderComponent } from './components/buy-order/add-buy-order/add-buy-order.component';
+import { AllBuyOrdersComponent } from './components/buy-order/all-buy-orders/all-buy-orders.component';
+import { BuyOrderViewComponent } from './components/buy-order/buy-order-view/buy-order-view.component';
+import { EditBuyOrderComponent } from './components/buy-order/edit-buy-order/edit-buy-order.component';
+import {ToolService} from './services/tool.service';
+import {BuyOrderService} from './services/buy-order.service';
+import {CategoryService} from './services/category.service';
 
 
 @NgModule({
@@ -30,11 +40,18 @@ import { ToolViewComponent } from './components/tool/tool-view/tool-view.compone
         AddEmployeeComponent,
         AllEmployeesComponent,
         EmployeeViewComponent,
-        UpdateEmployeeComponent,
         ToolListComponent,
         AddToolComponent,
         UpdateToolComponent,
-        ToolViewComponent
+        ToolViewComponent,
+        EmployeeDataComponent,
+        EmployeeEditComponent,
+        DashboardComponent,
+        CategoryComponent,
+        AddBuyOrderComponent,
+        AllBuyOrdersComponent,
+        BuyOrderViewComponent,
+        EditBuyOrderComponent
     ],
     imports: [
         BrowserModule,
@@ -48,6 +65,9 @@ import { ToolViewComponent } from './components/tool/tool-view/tool-view.compone
         InterceptorService,
         TokenStorage,
         EmployeeService,
+        ToolService,
+        BuyOrderService,
+        CategoryService,
         {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}
     ],
     bootstrap: [AppComponent]

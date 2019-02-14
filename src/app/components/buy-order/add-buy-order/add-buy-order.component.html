@@ -1,6 +1,6 @@
 <div class="container">
     <h2 style="margin-top: 30px">New buy order  </h2>
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" #form = "ngForm">
 
         <mat-grid-list cols="4" rowHeight="80px">
             <mat-grid-tile [colspan]="4" [rowspan]="1">
@@ -45,7 +45,7 @@
                     </mat-grid-tile>
                     <mat-grid-tile [colspan]="3" [rowspan]="1"></mat-grid-tile>
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <button mat-icon-button (click)="delete(category)">
+                        <button mat-icon-button type="button" (click)="delete(buyOrderTool)">
                             <mat-icon>delete</mat-icon>
                         </button>
                     </mat-grid-tile>
@@ -56,7 +56,7 @@
             <mat-grid-list cols="5" rowHeight="40px">
 
                 <mat-grid-tile [colspan]="5" [rowspan]="1">
-                    <button class="add" (click)="addNewBuyOrderTool()">
+                    <button class="add" type="button" (click)="addNewBuyOrderTool()">
                         <mat-icon>add</mat-icon>
                     </button>
                 </mat-grid-tile>
@@ -66,7 +66,7 @@
         <mat-grid-list cols="20" rowHeight="60px" style="margin-top: 30px;">
             <mat-grid-tile [colspan]="10" [rowspan]="1"></mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <button class="mat-primary" mat-raised-button type="submit">Add Buy Order</button>
+                <button class="mat-primary" mat-raised-button type="submit" [disabled]="!form.valid">Add Buy Order</button>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="1">
                 <a class="mat-warn" mat-raised-button routerLink="/">Cancel</a>

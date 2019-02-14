@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {BuyOrder, BuyOrderTool} from '../../../models/buy-order';
 import {BuyOrderService} from '../../../services/buy-order.service';
 import {Router} from '@angular/router';
-import {MatTableDataSource} from '@angular/material';
 
 @Component({
   selector: 'app-add-buy-order',
@@ -24,9 +23,19 @@ export class AddBuyOrderComponent implements OnInit {
   }
 
     addNewBuyOrderTool() {
+      console.log('add new buy order tool');
+      // todo implementation add new tool to order
     }
 
     onSubmit() {
+        this.buyOrderService.addBuyOrder(this.newBuyOrder).subscribe(
+            res => this.router.navigate(['/buyorders/' + res.id]),
+            error => {
+                console.log(error);
+            }
+        );
+    }
 
+    delete(buyOrderTool: BuyOrderTool) {
     }
 }

@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Category} from '../models/category';
 import {environment} from '../../environments/environment';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -22,10 +23,10 @@ export class CategoryService {
     }
 
     saveCategory(id: number, category: Category) {
-        return this.http.put(this.baseUrl + id, category);
+        return this.http.put(this.baseUrl + '/' + id, category);
     }
 
     deleteCategory(id: number) {
-        this.http.delete(this.baseUrl + id);
+        return this.http.delete(this.baseUrl + '/' + id);
     }
 }

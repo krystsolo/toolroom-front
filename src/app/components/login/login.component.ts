@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
       res => {
         console.log(res);
         this.token.saveToken(res.token);
-        localStorage.setItem('token', res.token);
         location.reload();
       },
       error => {

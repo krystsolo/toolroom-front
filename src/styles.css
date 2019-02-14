@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-mat-form-field {
-    width: 800%;
+mat-form-field, mat-slide-toggle {
+    width: 50%;
 }
 
 mat-select {
@@ -13,8 +13,17 @@ mat-grid-tile{
     width: 80%;
 }
 mat-slide-toggle {
-    width:80%;
+    width: 30%;
 }
+
+mat-button-toggle-group{
+    height: 50%;
+}
+
+.main-field {
+    font-size: x-large;
+}
+
 
 .container {
     width:80%;
@@ -27,4 +36,8 @@ mat-slide-toggle {
 
 .primary {
     color:white;
+}
+
+.strikethrough {
+    text-decoration: line-through;
 }

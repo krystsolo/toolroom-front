@@ -1,6 +1,6 @@
 <div class="container">
     <h3 style="margin-top: 30px">New tool Information </h3>
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
 
         <mat-grid-list cols="4" rowHeight="80px">
             <mat-grid-tile [colspan]="4" [rowspan]="1">
@@ -31,7 +31,7 @@
         <mat-grid-list cols="4" rowHeight="80px">
             <mat-grid-tile [colspan]="2" [rowspan]="1">
                 <mat-form-field>
-                    <mat-select placeholder="Category" [(value)]="newTool.category">
+                    <mat-select placeholder="Category" [(ngModel)]="newTool.category" name="category">
                         <mat-option *ngFor="let category of categories"
                                     [value]="category">{{category.name}}</mat-option>
                     </mat-select>
@@ -77,7 +77,7 @@
 
         <mat-grid-list cols="20" rowHeight="60px">
             <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <button class="mat-primary" mat-raised-button type="submit">Add Tool</button>
+                <button class="mat-primary" mat-raised-button type="submit" [disabled]="!form.valid">Add Tool</button>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="1">
                 <a class="mat-warn" mat-raised-button routerLink="/">Cancel</a>
