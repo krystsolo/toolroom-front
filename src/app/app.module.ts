@@ -19,7 +19,7 @@ import { ToolListComponent } from './components/tool/tool-list/tool-list.compone
 import { AddToolComponent } from './components/tool/add-tool/add-tool.component';
 import { UpdateToolComponent } from './components/tool/update-tool/update-tool.component';
 import { ToolViewComponent } from './components/tool/tool-view/tool-view.component';
-import { EmployeeDataComponent } from './components/employee/employee-data/employee-data.component';
+import { EmployeeDataComponent } from './components/employee/shared/employee-data/employee-data.component';
 import { EmployeeEditComponent } from './components/employee/employee-edit/employee-edit.component';
 import { DashboardComponent } from './components/dashboard/dashboard/dashboard.component';
 import { CategoryComponent } from './components/tool/category/category.component';
@@ -30,6 +30,7 @@ import { EditBuyOrderComponent } from './components/buy-order/edit-buy-order/edi
 import {ToolService} from './services/tool.service';
 import {BuyOrderService} from './services/buy-order.service';
 import {CategoryService} from './services/category.service';
+import { ImageComponent } from './components/employee/shared/image/image.component';
 
 
 @NgModule({
@@ -51,7 +52,8 @@ import {CategoryService} from './services/category.service';
         AddBuyOrderComponent,
         AllBuyOrdersComponent,
         BuyOrderViewComponent,
-        EditBuyOrderComponent
+        EditBuyOrderComponent,
+        ImageComponent
     ],
     imports: [
         BrowserModule,

@@ -15,6 +15,8 @@ import {AddBuyOrderComponent} from './components/buy-order/add-buy-order/add-buy
 import {AllBuyOrdersComponent} from './components/buy-order/all-buy-orders/all-buy-orders.component';
 import {BuyOrderViewComponent} from './components/buy-order/buy-order-view/buy-order-view.component';
 import {EditBuyOrderComponent} from './components/buy-order/edit-buy-order/edit-buy-order.component';
+import { RoleGuardService as RoleGuard } from './services/auth/role-guard.service';
+import {Role} from './models/role';
 
 const routes: Routes = [
     {
@@ -32,24 +34,36 @@ const routes: Routes = [
     },
     {
         path: 'employees/add',
-        component: AddEmployeeComponent
+        component: AddEmployeeComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: Role[Role.ADMIN]
+        }
     },
     {
         path: 'employees',
         component: AllEmployeesComponent
     },
     {
-        path: 'employees/:userName',
+        path: 'employees/:id',
         component: EmployeeViewComponent,
 
     },
     {
-        path: 'employees/:userName/update',
-        component: EmployeeEditComponent
+        path: 'employees/:id/update',
+        component: EmployeeEditComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: Role[Role.ADMIN]
+        }
     },
     {
         path: 'tools/add',
-        component: AddToolComponent
+        component: AddToolComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: Role[Role.WAREHOUSEMAN]
+        }
     },
     {
         path: 'tools',
@@ -61,15 +75,27 @@ const routes: Routes = [
     },
     {
         path: 'tools/:id/update',
-        component: UpdateToolComponent
+        component: UpdateToolComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: Role[Role.WAREHOUSEMAN]
+        }
     },
     {
         path: 'categories',
-        component: CategoryComponent
+        component: CategoryComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: Role[Role.WAREHOUSEMAN]
+        }
     },
     {
         path: 'buyorders/add',
-        component: AddBuyOrderComponent
+        component: AddBuyOrderComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: Role[Role.WAREHOUSEMAN]
+        }
     },
     {
         path: 'buyorders',
@@ -81,7 +107,11 @@ const routes: Routes = [
     },
     {
         path: 'buyorders/:id/update',
-        component: EditBuyOrderComponent
+        component: EditBuyOrderComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: Role[Role.WAREHOUSEMAN]
+        }
     }
 ];
 

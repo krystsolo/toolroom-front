@@ -18,8 +18,8 @@ export class EmployeeService {
         return this.http.get<Employee[]>(this.baseUrl);
     }
 
-    getEmployee(username: string): Observable<Employee> {
-        const url = this.baseUrl + '/' + username;
+    getEmployee(id: number): Observable<Employee> {
+        const url = this.baseUrl + '/' + id;
         return this.http.get<Employee>(url);
     }
 
@@ -27,13 +27,20 @@ export class EmployeeService {
         return this.http.post<Employee>(this.baseUrl, employee);
     }
 
-    saveEmployee(username: string, employee: Employee) {
-        const url = this.baseUrl + '/' + username;
+    saveEmployee(id: number, employee: Employee) {
+        const url = this.baseUrl + '/' + id;
         return this.http.put<Employee>(url, employee);
     }
 
     deleteEmployee(id: number) {
         const url = this.baseUrl + '/' + id;
         return this.http.delete<Employee>(url);
+    }
+
+    uploadImage(id: number, file: File) {
+        const formData: FormData = new FormData();
+        formData.append('file', file);
+
+        return this.http.post(this.baseUrl + '/' + id + '/image', formData);
     }
 }

@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import decode from 'jwt-decode';
+import {log} from 'util';
 
 const TOKEN_KEY = 'AuthToken';
 
@@ -9,14 +11,12 @@ export class TokenStorage {
     }
 
     public signOut() {
-        window.sessionStorage.removeItem(TOKEN_KEY);
-        window.sessionStorage.clear();
+        sessionStorage.removeItem(TOKEN_KEY);
+        sessionStorage.clear();
     }
 
     public saveToken(token: string) {
-        window.sessionStorage.removeItem(TOKEN_KEY);
-        window.sessionStorage.setItem(TOKEN_KEY, token);
-
+        sessionStorage.setItem(TOKEN_KEY, token);
     }
 
     public getToken(): string {
@@ -25,6 +25,11 @@ export class TokenStorage {
 
     public isAuthenticated(): boolean {
         return this.getToken() != null;
+    }
+
+    public getUserRoles(): Array<string> {
+        log(decode(this.getToken()).scopes);
+        return decode(this.getToken()).scopes;
     }
 
 }
