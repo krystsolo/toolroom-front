@@ -16,30 +16,41 @@ export class EmployeeEditComponent implements OnInit {
         isActive: true, phoneNumber: null, email: '', image: '', workingGroup: ''
     };
 
+    isDataLoaded: boolean;
+
     constructor(private employeeService: EmployeeService,
                 private router: Router,
                 private route: ActivatedRoute) {
     }
 
-    onSubmit() {
-        this.employeeService.saveEmployee(this.getUsernameFromUrl(), this.employee)
+    onSubmit(event) {
+        this.employeeService.saveEmployee(this.getEmployeeIdFromUrl(), event.emp)
             .subscribe(
                 res => {
-                    this.router.navigate(['/employees/' + res.userName]);
+                    if (event.file != null) {
+                        this.uploadImage(res.id, event.file);
+                    } else {
+                        this.routeToEmployeeView(res);
+                    }
                 },
                 error => {
                     console.log(error);
                 }
             );
+    }
+
+    private routeToEmployeeView(res) {
+        this.router.navigate(['/employees/' + res.id]);
     }
 
     ngOnInit() {
         this.employeeService.getEmployee(
-            this.getUsernameFromUrl()
+            this.getEmployeeIdFromUrl()
         )
             .subscribe(
                 res => {
                     this.employee = res;
+                    this.isDataLoaded = true;
                 },
                 error => {
                     console.log(error);
@@ -47,11 +58,20 @@ export class EmployeeEditComponent implements OnInit {
             );
     }
 
-    private getUsernameFromUrl() {
-        return this.route.snapshot.paramMap.get('userName');
+    private uploadImage(id: number, file: File): void {
+        this.employeeService.uploadImage(id, file).subscribe(
+            res => {
+                console.log('Image added');
+                this.routeToEmployeeView(id);
+            }, error => {
+                console.log('Error with add image');
+            },
+            () => {
+                console.log('Complete image upload');
+            }
+        );
     }
-
-    back() {
-        this.router.navigate([/employees/ + this.getUsernameFromUrl()]);
+    private getEmployeeIdFromUrl() {
+        return Number.parseInt(this.route.snapshot.paramMap.get('id'), 10);
     }
 }

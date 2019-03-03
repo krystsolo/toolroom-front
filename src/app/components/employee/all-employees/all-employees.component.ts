@@ -14,8 +14,9 @@ export class AllEmployeesComponent implements OnInit {
 
     private employees: Employee[];
     displayedColumns = ['id', 'image', 'userName', 'firstName', 'surName', 'phoneNumber',
-        'email', 'isActive'];
-     dataSource: MatTableDataSource<Employee>;
+        'email'];
+    dataSource: MatTableDataSource<Employee>;
+    isDataLoaded: boolean;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
@@ -34,6 +35,7 @@ export class AllEmployeesComponent implements OnInit {
                 this.dataSource = new MatTableDataSource(this.employees);
                 this.dataSource.paginator = this.paginator;
                 this.dataSource.sort = this.sort;
+                this.isDataLoaded = true;
             },
             error => {
                 console.log(error);
@@ -52,7 +54,7 @@ export class AllEmployeesComponent implements OnInit {
     onRowClicked(employee: Employee) {
         // if user.roles.contain === ADMIN then employee-details
         // else show simple employee info
-        this.router.navigate(['/employees/' + employee.userName]);
+        this.router.navigate(['/employees/' + employee.id]);
         console.log('Employee: ' + employee);
     }
 }

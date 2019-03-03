@@ -2,6 +2,7 @@ import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {EmployeeService} from '../../../services/employee.service';
 import {Employee} from '../../../models/employee';
 import {ActivatedRoute, convertToParamMap, ParamMap, Route, Router} from '@angular/router';
+import {Role} from '../../../models/role';
 
 
 @Component({
@@ -11,8 +12,10 @@ import {ActivatedRoute, convertToParamMap, ParamMap, Route, Router} from '@angul
 })
 export class EmployeeViewComponent implements OnInit {
 
-    private employee: Employee = {firstName: '', surName: '', password: '', userName: '', roles: [],
-        isActive: true, phoneNumber: null, email: '', image: '', workingGroup: ''};
+    employee: Employee = {
+        firstName: '', surName: '', password: '', userName: '', roles: [],
+        isActive: true, phoneNumber: null, email: '', image: '', workingGroup: ''
+    };
 
     constructor(private employeeService: EmployeeService,
                 private route: ActivatedRoute,
@@ -20,9 +23,7 @@ export class EmployeeViewComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.employeeService.getEmployee(
-            this.route.snapshot.paramMap.get('userName')
-        )
+        this.employeeService.getEmployee(this.getEmployeeIdFromUrl())
             .subscribe(
                 res => {
                     this.employee = res;
@@ -45,6 +46,10 @@ export class EmployeeViewComponent implements OnInit {
     }
 
     editEmployee() {
-        this.router.navigate(['/employees/' + this.employee.userName + '/update']);
+        this.router.navigate(['/employees/' + this.employee.id + '/update']);
+    }
+
+    private getEmployeeIdFromUrl(): number {
+        return Number.parseInt(this.route.snapshot.paramMap.get('id'), 10);
     }
 }
