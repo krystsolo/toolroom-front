@@ -30,7 +30,8 @@ export class InterceptorService implements HttpInterceptor {
             req = req.clone({headers: req.headers.set(TOKEN_HEADER_KEY, TOKEN_PREFIX + this.token.getToken())});
             console.log('authReq with token: ' + this.token.getToken());
         }
-        if (!req.headers.has('Content-Type')) {
+        const isMultipartFile = req.body != null && req.body.toString() === '[object FormData]';
+        if (!req.headers.has('Content-Type') && !isMultipartFile) {
             req = req.clone({headers: req.headers.set('Content-Type', 'application/json')});
         }
 
