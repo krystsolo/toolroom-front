@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import decode from 'jwt-decode';
 import {log} from 'util';
+import {Role} from '../../models/role';
 
 const TOKEN_KEY = 'AuthToken';
 
@@ -30,6 +31,10 @@ export class TokenStorage {
     public getUserRoles(): Array<string> {
         log(decode(this.getToken()).scopes);
         return decode(this.getToken()).scopes;
+    }
+
+    public hasUserRole(role: Role) {
+        return this.getUserRoles().indexOf(Role[role]) !== -1;
     }
 
 }

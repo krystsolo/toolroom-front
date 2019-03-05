@@ -31,6 +31,7 @@ import {ToolService} from './services/tool.service';
 import {BuyOrderService} from './services/buy-order.service';
 import {CategoryService} from './services/category.service';
 import { ImageComponent } from './components/employee/shared/image/image.component';
+import { EmployeeShortViewComponent } from './components/employee/shared/employee-short-view-dialog/employee-short-view.component';
 
 
 @NgModule({
@@ -53,8 +54,13 @@ import { ImageComponent } from './components/employee/shared/image/image.compone
         AllBuyOrdersComponent,
         BuyOrderViewComponent,
         EditBuyOrderComponent,
-        ImageComponent
+        ImageComponent,
+        EmployeeShortViewComponent
     ],
+
+    entryComponents: [
+    EmployeeShortViewComponent
+],
     imports: [
         BrowserModule,
         AppRoutingModule,

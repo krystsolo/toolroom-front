@@ -1,0 +1,58 @@
+<p>
+<div class="container">
+
+    <mat-grid-list cols="4" rowHeight="80px">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-form-field>
+                <input matInput id="username" placeholder="Username" type="text" name="username"
+                       readonly [(ngModel)]="employee.userName">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="5">
+            <app-image [employeeId]="employee.id" [width]="300" [height]="400"></app-image>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-form-field>
+                <input matInput id="firstname" placeholder="Firstname" type="text" name="firstname"
+                       readonly [(ngModel)]="employee.firstName">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-form-field>
+                <input matInput id="surname" placeholder="Surname" type="text" name="surname"
+                       readonly [(ngModel)]="employee.surName">
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="4" rowHeight="80px">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-form-field>
+                <input matInput id="phoneNumber" placeholder="Phone Number" type="tel" name="phoneNumber"
+                       readonly [(ngModel)]="employee.phoneNumber">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-form-field>
+                <input matInput id="email" placeholder="email" type="email" name="email" readonly
+                       [(ngModel)]="employee.email">
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="4" rowHeight="80px">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-form-field>
+                <input matInput id="workingGroup" placeholder="Working Group" type="text" name="workingGroup"
+                       readonly
+                       [(ngModel)]="employee.workingGroup">
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="4" rowHeight="80px">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-slide-toggle disabled  [(ngModel)]="employee.isActive" name="active">Active
+            </mat-slide-toggle>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

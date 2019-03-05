@@ -1,8 +1,12 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Employee} from '../../../models/employee';
 import {EmployeeService} from '../../../services/employee.service';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Router} from '@angular/router';
+import {EmployeeShort} from '../../../models/employee-short';
+import {TokenStorage} from '../../../services/auth/token-storage';
+import {Role} from '../../../models/role';
+import {EmployeeShortViewComponent} from '../shared/employee-short-view-dialog/employee-short-view.component';
 
 
 @Component({
@@ -12,18 +16,20 @@ import {Router} from '@angular/router';
 })
 export class AllEmployeesComponent implements OnInit {
 
-    private employees: Employee[];
+    private employees: EmployeeShort[];
     displayedColumns = ['id', 'image', 'userName', 'firstName', 'surName', 'phoneNumber',
         'email'];
-    dataSource: MatTableDataSource<Employee>;
+    dataSource: MatTableDataSource<EmployeeShort>;
     isDataLoaded: boolean;
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
     constructor(
+        public dialog: MatDialog,
         private employeeService: EmployeeService,
-        private router: Router) {
+        private router: Router,
+        private tokenStorage: TokenStorage) {
     }
 
 
@@ -52,9 +58,13 @@ export class AllEmployeesComponent implements OnInit {
     }
 
     onRowClicked(employee: Employee) {
-        // if user.roles.contain === ADMIN then employee-details
-        // else show simple employee info
-        this.router.navigate(['/employees/' + employee.id]);
+
+        if (this.tokenStorage.hasUserRole(Role.ADMIN)) {
+            this.router.navigate(['/employees/' + employee.id]);
+        } else {
+            this.dialog.open(EmployeeShortViewComponent, {data: {employee: employee}});
+        }
+
         console.log('Employee: ' + employee);
     }
 }

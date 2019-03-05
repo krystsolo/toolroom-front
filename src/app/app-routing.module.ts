@@ -47,7 +47,10 @@ const routes: Routes = [
     {
         path: 'employees/:id',
         component: EmployeeViewComponent,
-
+        canActivate: [RoleGuard],
+        data: {
+            role: Role[Role.ADMIN]
+        }
     },
     {
         path: 'employees/:id/update',
