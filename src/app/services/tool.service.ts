@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Tool} from '../models/tool';
 import {environment} from '../../environments/environment';
+import {map} from 'rxjs/operators';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Injectable({
     providedIn: 'root'
@@ -11,11 +13,11 @@ export class ToolService {
 
     baseUrl = environment.baseUrl + 'tools';
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
     }
 
-    getTools(): Observable<Tool[]> {
-        return this.http.get<Tool[]>(this.baseUrl);
+    getTools(httpParams?: HttpParams): Observable<Tool[]> {
+        return this.http.get<Tool[]>(this.baseUrl, {params: httpParams});
     }
 
     getTool(id: number): Observable<Tool> {
@@ -32,5 +34,20 @@ export class ToolService {
 
     deleteTool(id: number) {
         return this.http.delete(this.baseUrl + '/' + id);
+    }
+
+    uploadImage(id: number, file: File) {
+        const formData: FormData = new FormData();
+        formData.append('file', file, file.name);
+        return this.http.post(this.baseUrl + '/' + id + '/image', formData);
+    }
+
+    getImage(id: number) {
+        return this.http.get(this.baseUrl + '/' + id + '/image', {responseType: 'blob'})
+            .pipe(
+                map(blob => {
+                    const urlCreator = window.URL;
+                    return this.sanitizer.bypassSecurityTrustUrl(urlCreator.createObjectURL(blob));
+                }));
     }
 }

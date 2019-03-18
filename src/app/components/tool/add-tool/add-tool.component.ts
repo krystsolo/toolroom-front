@@ -1,11 +1,7 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Tool} from '../../../models/tool';
 import {ToolService} from '../../../services/tool.service';
-import {Category} from '../../../models/category';
-import {EmployeeService} from '../../../services/employee.service';
 import {Router} from '@angular/router';
-import {CategoryService} from '../../../services/category.service';
-import {MatSlideToggle, MatSlideToggleChange} from '@angular/material';
 
 @Component({
     selector: 'app-add-tool',
@@ -14,26 +10,28 @@ import {MatSlideToggle, MatSlideToggleChange} from '@angular/material';
 })
 export class AddToolComponent implements OnInit {
 
+    @Output()
     newTool: Tool = {
         name: '', currentCount: 0, unitOfMeasure: 'PCS', allCount: 0,
         category: null, minimalCount: 0, isUnique: false, isToReturn: true,
         warrantyDate: null, location: '', isEnable: true, image: ''
     };
 
-    categories: Category[];
-    minDate: Date;
-    isToReturnChecked: boolean;
-    isToReturnDisable: boolean;
-
-    constructor(private toolService: ToolService, private categoryService: CategoryService,
+    constructor(private toolService: ToolService,
                 private router: Router) {
     }
 
     ngOnInit() {
-        this.minDate = new Date();
-        this.categoryService.getCategories().subscribe(
+    }
+
+    onSubmit(event) {
+        this.toolService.addTool(event.tool).subscribe(
             res => {
-                this.categories = res;
+                if (event.file != null) {
+                    this.uploadImage(res.id, event.file);
+                } else {
+                    this.router.navigate(['/tools/' + res.id]);
+                }
             },
             error => {
                 console.log(error);
@@ -41,33 +39,15 @@ export class AddToolComponent implements OnInit {
         );
     }
 
-    onSubmit() {
-        this.toolService.addTool(this.newTool).subscribe(
+    private uploadImage(id: number, file: File): void {
+        this.toolService.uploadImage(id, file).subscribe(
             res => {
-                this.newTool = {
-                    name: '', currentCount: 0, unitOfMeasure: 'PCS', allCount: 0,
-                    category: null, minimalCount: 0, isUnique: false, isToReturn: true,
-                    warrantyDate: null, location: '', isEnable: true, image: ''
-                };
-                this.router.navigate(['/tools/' + res.id]);
-            },
-            error => {
-                console.log(error);
+                console.log('Image added');
+                this.router.navigate(['/tools/' + id]);
+            }, error => {
+                console.log('Error with add image');
             }
         );
     }
 
-    addCategory() {
-
-    }
-
-    uniqueChange($event: MatSlideToggleChange) {
-        if ($event.checked === true) {
-            this.isToReturnChecked = true;
-            this.isToReturnDisable = true;
-        } else {
-            this.isToReturnDisable = false;
-            this.isToReturnChecked = false;
-        }
-    }
 }

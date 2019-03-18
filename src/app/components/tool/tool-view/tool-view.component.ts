@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {Tool} from '../../../models/tool';
-import {Category} from '../../../models/category';
 import {ToolService} from '../../../services/tool.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {TokenStorage} from '../../../services/auth/token-storage';
+import {Role} from '../../../models/role';
 
 @Component({
     selector: 'app-tool-view',
@@ -51,5 +52,9 @@ export class ToolViewComponent implements OnInit {
             }
         );
         location.reload();
+    }
+
+    hasUserRoleAdmin(): boolean {
+        return TokenStorage.hasUserRole(Role.WAREHOUSEMAN);
     }
 }

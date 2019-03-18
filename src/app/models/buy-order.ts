@@ -7,7 +7,7 @@ export interface BuyOrder {
     addTimestamp?: Date;
     editTimestamp?: Date;
     buyOrderTools?: Array<BuyOrderTool>;
-    warehousemanUsername?: string;
+    warehousemanId?: number;
     description?: string;
 }
 

@@ -1,100 +1,98 @@
 <div class="container">
     <h3 style="margin-top: 30px">Tool Information </h3>
 
-    <mat-grid-list cols="20" rowHeight="60px">
-        <mat-grid-tile [colspan]="18"></mat-grid-tile>
-        <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <button class="mat-accent" mat-raised-button (click)="editTool()">Edit Tool</button>
+    <mat-grid-list cols="20" rowHeight="45px">
+        <mat-grid-tile [colspan]="2" [rowspan]="2"></mat-grid-tile>
+        <mat-grid-tile [colspan]="14" [rowspan]="2">
+            <mat-form-field class="main-field">
+                <input matInput [ngClass]="tool.isEnable ? 'null' : 'strikethrough'" placeholder="Name:" id="name"
+                       type="text" name="name"
+                       [value]="tool.name" [readonly]="true">
+            </mat-form-field>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="18"></mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="2"></mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <button class="mat-warn" mat-raised-button (click)="deleteTool()">Disable Tool</button>
+            <div *ngIf="hasUserRoleAdmin()">
+                <button class="mat-accent" mat-raised-button (click)="editTool()">Edit Tool</button>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <div *ngIf="hasUserRoleAdmin()">
+                <button class="mat-warn" mat-raised-button (click)="deleteTool()" [disabled]="!tool.isEnable">Disable Tool</button>
+            </div>
         </mat-grid-tile>
     </mat-grid-list>
-
-        <mat-grid-list cols="4" rowHeight="100px">
-            <mat-grid-tile [colspan]="4" [rowspan]="1">
-                <mat-form-field class="main-field">
-                    <input matInput [ngClass]="tool.isEnable ? 'null' : 'strikethrough'" placeholder="Name:" id="name" type="text" name="name"
-                           [value]="tool.name" [readonly]="true" >
-                </mat-form-field>
-            </mat-grid-tile>
-        </mat-grid-list>
 
     <mat-grid-list cols="4" rowHeight="80px">
         <mat-grid-tile [colspan]="2" [rowspan]="1">
             <mat-form-field>
-                <input matInput id="currentCount" placeholder="Current count in warehouse" type="number" name="currentCount"
-                        [readonly]="true" [(ngModel)]="tool.currentCount">
+                <input matInput id="currentCount" placeholder="Current count in warehouse" type="number"
+                       name="currentCount"
+                       [readonly]="true" [(ngModel)]="tool.currentCount">
             </mat-form-field>
         </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="2" [rowspan]="4">
+            <app-tool-image [toolId]="getToolIdFromUrl()" [width]="240" [height]="320"></app-tool-image>
+        </mat-grid-tile>
+
         <mat-grid-tile [colspan]="2" [rowspan]="1">
             <mat-form-field>
                 <input matInput id="allCount" placeholder="All tool count" type="number" name="allCount"
                        [readonly]="true" [(ngModel)]="tool.allCount">
             </mat-form-field>
         </mat-grid-tile>
-
+        <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <h3>Unit of measure:</h3>
+            <input matInput id="unitOfMeasure" placeholder="UnitOfMeasure" type="text" name="UnitOfMeasure"
+                   [readonly]="true"
+                   [(ngModel)]="tool.unitOfMeasure">
+        </mat-grid-tile>
     </mat-grid-list>
 
+    <mat-grid-list cols="4" rowHeight="80px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-slide-toggle [disabled]="true" [(ngModel)]="tool.isUnique" name="unique">Unique
+            </mat-slide-toggle>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-slide-toggle [disabled]="true" [(ngModel)]="tool.isToReturn" name="toReturn">To Return
+            </mat-slide-toggle>
+        </mat-grid-tile>
+    </mat-grid-list>
 
     <mat-grid-list cols="4" rowHeight="80px">
-            <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <mat-form-field>
-                    <input matInput id="location" placeholder="Location" type="text" name="location" [readonly]="true"
-                           [(ngModel)]="tool.location">
-                </mat-form-field>
-            </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-form-field>
+                <input matInput id="category" placeholder="Category" type="text" name="category" [readonly]="true"
+                       [value]="tool?.category ? tool.category.name : ''">
+            </mat-form-field>
+        </mat-grid-tile>
 
-            <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <h3>Unit of measure:</h3>
-                <mat-button-toggle-group name="unitOfMeasure" [value]="tool.unitOfMeasure" [disabled]="true">
-                    <mat-button-toggle [value]="tool.unitOfMeasure">{{tool.unitOfMeasure}}</mat-button-toggle>
-                </mat-button-toggle-group>
-            </mat-grid-tile>
-        </mat-grid-list>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-form-field>
+                <input matInput id="minimalCount" placeholder="Minimal tool count on magazine" type="number"
+                       name="minimalCount" [readonly]="true"
+                       [(ngModel)]="tool.minimalCount">
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
 
-        <mat-grid-list cols="4" rowHeight="80px">
-            <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <mat-form-field>
-                    <input matInput id="category" placeholder="Category" type="text" name="category" [readonly]="true"
-                            [value]="tool?.category ? tool.category.name : ''">
-                </mat-form-field>
-            </mat-grid-tile>
-
-            <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <mat-slide-toggle [disabled]="true" [(ngModel)]="tool.isUnique" name="unique">Unique
-                </mat-slide-toggle>
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <mat-grid-list cols="4" rowHeight="80px">
-            <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <mat-form-field>
-                    <input matInput id="minimalCount" placeholder="Minimal tool count on magazine" type="number" name="minimalCount" [readonly]="true"
-                           [(ngModel)]="tool.minimalCount">
-                </mat-form-field>
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <mat-grid-list cols="4" rowHeight="80px">
-            <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <mat-slide-toggle [disabled]="true" [(ngModel)]="tool.isToReturn" name="toReturn">To Return
-                </mat-slide-toggle>
-            </mat-grid-tile>
-            <mat-grid-tile [colspan]="2" [rowspan]="1">
-                <mat-form-field>
-                    <input matInput [matDatepicker]="picker" placeholder="Warranty date" [readonly]="true"
-                           [value]="tool.warrantyDate" name="warrantyDate">
-                    <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
-                    <mat-datepicker #picker [disabled]="true"></mat-datepicker>
-                </mat-form-field>
-            </mat-grid-tile>
-        </mat-grid-list>
-
-        <mat-label>Image:</mat-label>
-
-        <br><br><br>
-
-
+    <mat-grid-list cols="4" rowHeight="80px">
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-form-field>
+                <input matInput id="location" placeholder="Location" type="text" name="location" [readonly]="true"
+                       [(ngModel)]="tool.location">
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" placeholder="Warranty date" [readonly]="true"
+                       [value]="tool.warrantyDate" name="warrantyDate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker [disabled]="true"></mat-datepicker>
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
 </div>

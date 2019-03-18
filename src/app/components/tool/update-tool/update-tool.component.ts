@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Output} from '@angular/core';
 import {Tool} from '../../../models/tool';
 import {Category} from '../../../models/category';
 import {ToolService} from '../../../services/tool.service';
@@ -13,34 +13,25 @@ import {MatSlideToggleChange} from '@angular/material';
 })
 export class UpdateToolComponent implements OnInit {
 
+    @Output()
     tool: Tool = {
         name: '', currentCount: 0, unitOfMeasure: 'PCS', allCount: 0,
         category: null, minimalCount: 0, isUnique: false, isToReturn: true,
         warrantyDate: null, location: '', isEnable: true, image: ''
     };
-    categories: Category[];
-    minDate: Date;
-    isToReturnChecked: boolean;
-    isToReturnDisable: boolean;
 
-    constructor(private toolService: ToolService, private categoryService: CategoryService,
+    isDataLoaded: boolean;
+
+    constructor(private toolService: ToolService,
                 private router: Router,
                 private route: ActivatedRoute) {
     }
 
     ngOnInit() {
-        this.minDate = new Date();
-        this.categoryService.getCategories().subscribe(
-            res => {
-                this.categories = res;
-            },
-            error => {
-                console.log(error);
-            }
-        );
         this.toolService.getTool(this.getToolIdFromUrl()).subscribe(
             res => {
                 this.tool = res;
+                this.isDataLoaded = true;
             },
             error => {
                 console.log(error);
@@ -48,10 +39,13 @@ export class UpdateToolComponent implements OnInit {
         );
     }
 
-    onSubmit() {
-        this.toolService.saveTool(this.getToolIdFromUrl(), this.tool).subscribe(
-            res => {
-                this.router.navigate(['/tools/' + res.id]);
+    onSubmit(event) {
+        this.toolService.saveTool(this.getToolIdFromUrl(), event.tool).subscribe(
+            res => {if (event.file != null) {
+                this.uploadImage(res.id, event.file);
+            } else {
+                this.routeToToolView(res.id);
+            }
             },
             error => {
                 console.log(error);
@@ -59,18 +53,8 @@ export class UpdateToolComponent implements OnInit {
         );
     }
 
-    addCategory() {
-
-    }
-
-    uniqueChange($event: MatSlideToggleChange) {
-        if ($event.checked === true) {
-            this.isToReturnChecked = true;
-            this.isToReturnDisable = true;
-        } else {
-            this.isToReturnDisable = false;
-            this.isToReturnChecked = false;
-        }
+    private routeToToolView(id: number) {
+        this.router.navigate(['/tools/' + id]);
     }
 
     private getToolIdFromUrl(): number {
@@ -81,4 +65,17 @@ export class UpdateToolComponent implements OnInit {
         this.router.navigate(['/tools/' + this.getToolIdFromUrl()]);
     }
 
+    private uploadImage(id: number, file: File): void {
+        this.toolService.uploadImage(id, file).subscribe(
+            res => {
+                console.log('Image added');
+                this.routeToToolView(id);
+            }, error => {
+                console.log('Error with add image');
+            },
+            () => {
+                console.log('Complete image upload');
+            }
+        );
+    }
 }
