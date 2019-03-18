@@ -35,8 +35,9 @@
             <h4>Warehouseman:</h4>
         </mat-grid-tile>
         <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <input matInput id="warehousemanUsername" placeholder="" type="text" name="warehousemanUsername"
-                   readonly [(ngModel)]="buyOrder.warehousemanUsername">
+            <div *ngIf="warehouseman != null" ngClass="dialog-run-text" >
+                <a (click)="showWarehousemanDialog()">{{warehouseman.userName}}</a>
+            </div>
         </mat-grid-tile>
     </mat-grid-list>
     <mat-grid-list cols="6" rowHeight="80px">
@@ -52,7 +53,7 @@
         <h3>Tools in order:</h3>
     </div>
 
-    <mat-grid-list cols="10" rowHeight="40px" *ngFor="let buyOrderTool of buyOrder.buyOrderTools">
+    <mat-grid-list cols="10" rowHeight="60px" *ngFor="let buyOrderTool of buyOrder.buyOrderTools">
         <mat-grid-tile [colspan]="1" [rowspan]="1">
             {{buyOrderTool.tool.id}}
         </mat-grid-tile>
@@ -60,7 +61,7 @@
             {{buyOrderTool.tool.name}}
         </mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="1">
-            IMAGEEEEEEEEEEEEEEEEEEEEEEEEE
+                <app-tool-image [toolId]="buyOrderTool.tool.id" [width]="50" [height]="50"></app-tool-image>
         </mat-grid-tile>
         <mat-grid-tile [colspan]="1" [rowspan]="1">
             {{buyOrderTool.count}}

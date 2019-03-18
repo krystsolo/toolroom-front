@@ -1,0 +1,10 @@
+textarea {
+    resize: none;
+}
+
+button.add {
+    width: 100%;
+    background-color: white;
+    border: white;
+    height: 100%;
+}
