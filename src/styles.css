@@ -41,3 +41,8 @@ mat-button-toggle-group{
 .strikethrough {
     text-decoration: line-through;
 }
+
+.dialog-run-text {
+    color: dodgerblue;
+    text-decoration-line: underline;
+}

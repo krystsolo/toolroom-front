@@ -16,7 +16,7 @@ export class NavBarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.isLoggedIn = this.token.isAuthenticated();
+        this.isLoggedIn = TokenStorage.isAuthenticated();
         if (!this.isLoggedIn) {
             this.router.navigate(['']);
         }
@@ -24,7 +24,7 @@ export class NavBarComponent implements OnInit {
 
     logout() {
         this.loginService.logout();
-        this.token.signOut();
+        TokenStorage.signOut();
         location.reload();
     }
 }

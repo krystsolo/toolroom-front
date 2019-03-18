@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
     this.loginService.attemptAuth(this.credential.username, this.credential.password).subscribe(
       res => {
         console.log(res);
-        this.token.saveToken(res.token);
+        TokenStorage.saveTokenAndUsername(res.token, this.credential.username);
         location.reload();
       },
       error => {
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-      this.loggedIn = this.token.isAuthenticated();
+      this.loggedIn = TokenStorage.isAuthenticated();
       console.log('is logged: ' + this.loggedIn);
       if (this.loggedIn) {
           this.router.navigate(['dashboard']);

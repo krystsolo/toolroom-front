@@ -4,6 +4,7 @@ import {log} from 'util';
 import {Role} from '../../models/role';
 
 const TOKEN_KEY = 'AuthToken';
+const USERNAME = 'Username';
 
 @Injectable()
 export class TokenStorage {
@@ -11,30 +12,36 @@ export class TokenStorage {
     constructor() {
     }
 
-    public signOut() {
+    public static signOut() {
         sessionStorage.removeItem(TOKEN_KEY);
+        sessionStorage.removeItem(USERNAME);
         sessionStorage.clear();
     }
 
-    public saveToken(token: string) {
+    public static saveTokenAndUsername(token: string, username: string) {
         sessionStorage.setItem(TOKEN_KEY, token);
+        sessionStorage.setItem(USERNAME, username);
     }
 
-    public getToken(): string {
+    public static getToken(): string {
         return sessionStorage.getItem(TOKEN_KEY);
     }
 
-    public isAuthenticated(): boolean {
-        return this.getToken() != null;
+    public static isAuthenticated(): boolean {
+        return TokenStorage.getToken() != null;
     }
 
-    public getUserRoles(): Array<string> {
-        log(decode(this.getToken()).scopes);
-        return decode(this.getToken()).scopes;
+    public static getLoggedUsername(): string {
+        return sessionStorage.getItem(USERNAME);
     }
 
-    public hasUserRole(role: Role) {
-        return this.getUserRoles().indexOf(Role[role]) !== -1;
+    public static getUserRoles(): Array<string> {
+        log(decode(TokenStorage.getToken()).scopes);
+        return decode(TokenStorage.getToken()).scopes;
+    }
+
+    public static hasUserRole(role: Role) {
+        return TokenStorage.getUserRoles().indexOf(Role[role]) !== -1;
     }
 
 }
