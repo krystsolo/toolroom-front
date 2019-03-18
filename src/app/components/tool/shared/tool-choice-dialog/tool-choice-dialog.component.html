@@ -1,0 +1,8 @@
+<div style="position: relative; right: 0;">
+    <button mat-button [mat-dialog-close]="null">
+        <mat-icon>clear</mat-icon>
+    </button>
+</div>
+
+<app-tool-table [tools]="tools" (toolClicked)="onRowClicked($event)" [width]="'full-width'"></app-tool-table>
+
