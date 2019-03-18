@@ -28,8 +28,7 @@ export class AllEmployeesComponent implements OnInit {
     constructor(
         public dialog: MatDialog,
         private employeeService: EmployeeService,
-        private router: Router,
-        private tokenStorage: TokenStorage) {
+        private router: Router) {
     }
 
 
@@ -59,10 +58,13 @@ export class AllEmployeesComponent implements OnInit {
 
     onRowClicked(employee: Employee) {
 
-        if (this.tokenStorage.hasUserRole(Role.ADMIN)) {
+        if (TokenStorage.hasUserRole(Role.ADMIN)) {
             this.router.navigate(['/employees/' + employee.id]);
         } else {
-            this.dialog.open(EmployeeShortViewComponent, {data: {employee: employee}});
+            this.dialog.open(EmployeeShortViewComponent, {
+                data: {employee: employee}, height: '700px',
+                width: '800px'
+            });
         }
 
         console.log('Employee: ' + employee);

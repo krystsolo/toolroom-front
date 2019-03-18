@@ -4,17 +4,23 @@
         <mat-grid-tile [colspan]="2" [rowspan]="1">
             <mat-form-field>
                 <input matInput id="username" placeholder="Username" type="text" name="username"
-                       required minLength="3" [(ngModel)]="employee.userName">
+                       required minLength="3" [ngClass]="employee.isActive ? 'null' : 'strikethrough'" [(ngModel)]="employee.userName">
             </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="5">
             <app-image [source]="url" [employeeId]="employee.id" [width]="300" [height]="400"></app-image>
         </mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <mat-form-field>
-                <input matInput id="password" placeholder="Password" type="text" name="password"
-                       required [(ngModel)]="employee.password">
-            </mat-form-field>
+
+                    <mat-form-field *ngIf="employee.id == null">
+                        <input matInput id="password1" placeholder="Password" type="text" name="password"
+                           required [(ngModel)]="employee.password">
+                    </mat-form-field>
+                    <mat-form-field *ngIf="employee.id != null">
+                    <input matInput id="password2" placeholder="Password change (leave empty to keep old one)" type="text" name="password"
+                           [(ngModel)]="employee.password">
+                    </mat-form-field>
+
         </mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="1">
             <mat-form-field>
@@ -75,10 +81,10 @@
     <mat-grid-list cols="20" rowHeight="60px">
         <mat-grid-tile [colspan]="14"></mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <button class="mat-primary" [disabled]="!f.valid || !f.dirty" mat-raised-button type="submit">Submit</button>
+            <button class="mat-primary" [disabled]="!f.valid || (!f.dirty && url == '')" mat-raised-button type="submit">Submit</button>
         </mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <a class="mat-warn" mat-raised-button routerLink="/employees">Cancel</a>
+            <a class="mat-warn" type="button" mat-raised-button (click)="back()">Cancel</a>
         </mat-grid-tile>
     </mat-grid-list>
 </form>

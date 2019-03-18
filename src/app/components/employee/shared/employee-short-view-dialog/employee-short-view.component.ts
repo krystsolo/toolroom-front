@@ -10,13 +10,13 @@ import {MAT_DIALOG_DATA} from '@angular/material';
 })
 export class EmployeeShortViewComponent implements OnInit {
 
-    // employee: EmployeeShort;
+    employee: EmployeeShort;
     constructor(
-        @Inject(MAT_DIALOG_DATA) public employee: EmployeeShort) {
+        @Inject(MAT_DIALOG_DATA) public data: any) {
     }
 
     ngOnInit() {
-        // this.employee = this.data;
+        this.employee = this.data.employee;
     }
 
 }

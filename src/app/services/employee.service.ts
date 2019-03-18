@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
 import {DomSanitizer} from '@angular/platform-browser';
+import {EmployeeShort} from '../models/employee-short';
 
 @Injectable({
     providedIn: 'root'
@@ -16,13 +17,18 @@ export class EmployeeService {
     constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
     }
 
-    getEmployees(): Observable<Employee[]> {
-        return this.http.get<Employee[]>(this.baseUrl);
+    getEmployees(): Observable<EmployeeShort[]> {
+        return this.http.get<EmployeeShort[]>(this.baseUrl);
     }
 
     getEmployee(id: number): Observable<Employee> {
         const url = this.baseUrl + '/' + id;
         return this.http.get<Employee>(url);
+    }
+
+    getEmployeeShort(id: number): Observable<EmployeeShort> {
+        const url = this.baseUrl + '/' + id + '/info';
+        return this.http.get<EmployeeShort>(url);
     }
 
     addEmployee(employee: Employee) {
@@ -42,9 +48,6 @@ export class EmployeeService {
     uploadImage(id: number, file: File) {
         const formData: FormData = new FormData();
         formData.append('file', file, file.name);
-        // let req = new HttpRequest('POST', this.baseUrl + '/' + id + '/image', formData);
-        // req = req.clone({headers: req.headers.set('Content-Type', 'multipart/form-data')});
-        // return this.http.request(req);
         return this.http.post(this.baseUrl + '/' + id + '/image', formData);
     }
 

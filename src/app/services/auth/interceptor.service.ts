@@ -26,9 +26,9 @@ export class InterceptorService implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler):
         Observable<HttpEvent<any>> {
 
-        if (this.token.getToken() != null) {
-            req = req.clone({headers: req.headers.set(TOKEN_HEADER_KEY, TOKEN_PREFIX + this.token.getToken())});
-            console.log('authReq with token: ' + this.token.getToken());
+        if (TokenStorage.getToken() != null) {
+            req = req.clone({headers: req.headers.set(TOKEN_HEADER_KEY, TOKEN_PREFIX + TokenStorage.getToken())});
+            console.log('authReq with token: ' + TokenStorage.getToken());
         }
         const isMultipartFile = req.body != null && req.body.toString() === '[object FormData]';
         if (!req.headers.has('Content-Type') && !isMultipartFile) {
@@ -41,7 +41,7 @@ export class InterceptorService implements HttpInterceptor {
             catchError(
                 (err: HttpErrorResponse) => {
                     if (err.status === 401) {
-                        this.token.signOut();
+                        TokenStorage.signOut();
                         this.router.navigate(['']);
                     }
                     return throwError(err);

@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Employee} from '../../../../models/employee';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-employee-data',
@@ -24,7 +25,7 @@ export class EmployeeDataComponent implements OnInit {
         return this.employee;
     }*/
 
-    constructor() {
+    constructor(private router: Router) {
     }
 
     ngOnInit() {
@@ -44,6 +45,14 @@ export class EmployeeDataComponent implements OnInit {
             };
             reader.readAsDataURL(event.target.files[0]);
             this.selectedFile = event.target.files[0];
+        }
+    }
+
+    back() {
+        if (this.employee.id != null) {
+            this.router.navigate(['/employees/' + this.employee.id]);
+        } else {
+            this.router.navigate(['/employees']);
         }
     }
 }

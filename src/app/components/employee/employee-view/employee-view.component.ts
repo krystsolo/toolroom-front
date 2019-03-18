@@ -3,6 +3,7 @@ import {EmployeeService} from '../../../services/employee.service';
 import {Employee} from '../../../models/employee';
 import {ActivatedRoute, convertToParamMap, ParamMap, Route, Router} from '@angular/router';
 import {Role} from '../../../models/role';
+import {TokenStorage} from '../../../services/auth/token-storage';
 
 
 @Component({
@@ -47,6 +48,10 @@ export class EmployeeViewComponent implements OnInit {
 
     editEmployee() {
         this.router.navigate(['/employees/' + this.employee.id + '/update']);
+    }
+
+    isEmployeeLoggedUser(): boolean {
+        return this.employee.userName === TokenStorage.getLoggedUsername();
     }
 
     private getEmployeeIdFromUrl(): number {

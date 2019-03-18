@@ -36,7 +36,6 @@ export class ImageComponent implements OnInit, OnChanges {
                     this.setDefaultPic();
                 }
             );
-            // this.source = environment.baseUrl + 'employees/' + this.employeeId + '/image';
         } else {
             this.setDefaultPic();
         }

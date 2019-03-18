@@ -10,7 +10,6 @@ import {Router} from '@angular/router';
 })
 export class AddEmployeeComponent {
 
-    @Output()
     newEmployee: Employee = this.fillEmployeeFieldsWithDefaultValues();
 
     constructor(private employeeService: EmployeeService, private router: Router) {
@@ -21,9 +20,9 @@ export class AddEmployeeComponent {
             res => {
                 if (event.file != null) {
                     this.uploadImage(res.id, event.file);
+                } else {
+                    this.router.navigate(['/employees/' + res.id]);
                 }
-                this.newEmployee = this.fillEmployeeFieldsWithDefaultValues();
-                this.router.navigate(['/employees/' + res.id]);
             },
             error => {
                 console.log(error);
@@ -35,6 +34,7 @@ export class AddEmployeeComponent {
         this.employeeService.uploadImage(id, file).subscribe(
             res => {
                 console.log('Image added');
+                this.router.navigate(['/employees/' + id]);
             }, error => {
                 console.log('Error with add image');
             }

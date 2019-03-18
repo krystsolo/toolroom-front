@@ -30,7 +30,7 @@ export class EmployeeEditComponent implements OnInit {
                     if (event.file != null) {
                         this.uploadImage(res.id, event.file);
                     } else {
-                        this.routeToEmployeeView(res);
+                        this.routeToEmployeeView(res.id);
                     }
                 },
                 error => {
@@ -39,8 +39,8 @@ export class EmployeeEditComponent implements OnInit {
             );
     }
 
-    private routeToEmployeeView(res) {
-        this.router.navigate(['/employees/' + res.id]);
+    private routeToEmployeeView(id: number) {
+        this.router.navigate(['/employees/' + id]);
     }
 
     ngOnInit() {
