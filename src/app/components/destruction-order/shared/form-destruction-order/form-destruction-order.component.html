@@ -1,0 +1,81 @@
+<form (ngSubmit)="onSubmit()" #form="ngForm">
+
+    <mat-grid-list cols="4" rowHeight="80px">
+        <mat-grid-tile [colspan]="4" [rowspan]="1">
+            <mat-form-field>
+                <input matInput id="orderCode" placeholder="Order code" type="text" name="orderCode"
+                       required [(ngModel)]="destructionOrder.orderCode">
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="4" rowHeight="80px">
+        <mat-grid-tile [colspan]="2" [rowspan]="1"></mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <h4>Warehouseman:</h4>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <input matInput id="warehousemanUsername" placeholder="" type="text" name="warehousemanUsername"
+                   readonly [(ngModel)]="warehousemanUsername">
+        </mat-grid-tile>
+    </mat-grid-list>
+    <mat-grid-list cols="4" rowHeight="80px">
+        <mat-grid-tile [colspan]="4" [rowspan]="1">
+            <mat-form-field  ngClass="container">
+                <textarea matInput id="description" placeholder="Description" type="text" name="description"
+                          [(ngModel)]="destructionOrder.description"></textarea>
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <div>
+        <h3>Tools in order:</h3>
+    </div>
+
+    <mat-grid-list cols="10" rowHeight="60px" *ngFor="let destructionOrderTool of destructionOrder.destructionOrderTools; let i = index">
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <h4>{{destructionOrderTool.tool.id}}</h4>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <h4>{{destructionOrderTool.tool.name}}</h4>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <app-tool-image [toolId]="destructionOrderTool.tool.id" [width]="50" [height]="50"></app-tool-image>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <input matInput id="toolCount" placeholder="Count" type="number" name="toolCount{{i}}"
+                   [(ngModel)]="destructionOrder.destructionOrderTools[i].count" [readonly]="destructionOrder.destructionOrderTools[i].tool.isUnique"
+                   min="1">
+            {{destructionOrderTool.tool.unitOfMeasure}}
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <button mat-icon-button type="button" (click)="delete(destructionOrderTool)">
+                <mat-icon>delete</mat-icon>
+            </button>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-divider></mat-divider>
+
+    <mat-grid-list cols="5" rowHeight="40px">
+
+        <mat-grid-tile [colspan]="5" [rowspan]="1">
+            <button class="add" type="button" (click)="addNewDestructionOrderTool()">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+    <mat-grid-list cols="20" rowHeight="60px" style="margin-top: 30px;">
+        <mat-grid-tile [colspan]="10" [rowspan]="1"></mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <button class="mat-primary" mat-raised-button type="submit" [disabled]="!form.valid || !form.dirty">Add Destruction Order</button>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <a class="mat-warn" mat-raised-button routerLink="/">Cancel</a>
+        </mat-grid-tile>
+    </mat-grid-list>
+
+</form>

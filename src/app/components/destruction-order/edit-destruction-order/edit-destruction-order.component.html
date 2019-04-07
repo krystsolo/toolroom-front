@@ -1,0 +1,6 @@
+<div class="container">
+    <h2 style="margin-top: 30px">Edit destruction order</h2>
+    <div *ngIf="destructionOrder != null">
+        <app-form-destruction-order (editedDestructionOrderChange)="onSubmit($event)" [destructionOrder]="destructionOrder"></app-form-destruction-order>
+    </div>
+</div>
