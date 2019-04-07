@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Employee} from '../../../../models/employee';
 import {Router} from '@angular/router';
+import {RoleEnum} from '../../../../models/roleEnum';
+import {Role} from '../../../../models/role';
 
 @Component({
     selector: 'app-employee-data',
@@ -9,7 +11,6 @@ import {Router} from '@angular/router';
 })
 export class EmployeeDataComponent implements OnInit {
 
-    // @Input() employee: Employee;
     employee: Employee;
     selectedFile: File;
     @Output() editedEmployeeChange = new EventEmitter<{emp: Employee, file: File}>();
@@ -20,16 +21,24 @@ export class EmployeeDataComponent implements OnInit {
     }
 
     url = '';
-
-    /*get editedEmployee(): Employee {
-        return this.employee;
-    }*/
+    allRoles: Role[] = [{id: 3, roleType: RoleEnum[RoleEnum.WAREHOUSEMAN]}, {id: 1, roleType: RoleEnum[RoleEnum.ADMIN]}];
+    employeeRole: Role = {id: 2, roleType: RoleEnum[RoleEnum.EMPLOYEE]};
+    isDirty: boolean;
 
     constructor(private router: Router) {
     }
 
     ngOnInit() {
-        console.log('employee id data ' + this.employee.id );
+        if (this.employee.roles.length === 0) {
+            this.employee.roles.push(this.employeeRole);
+        } else {
+            this.allRoles.map(role => {
+                const index = this.employee.roles.map(r => r.id).indexOf(role.id);
+                if (index !== -1 ) {
+                    this.allRoles.splice(index, 1);
+                }
+            });
+        }
     }
 
     onSubmit() {
@@ -54,5 +63,17 @@ export class EmployeeDataComponent implements OnInit {
         } else {
             this.router.navigate(['/employees']);
         }
+    }
+
+    deleteRole(role: Role) {
+        this.employee.roles.splice(this.employee.roles.indexOf(role), 1);
+        this.allRoles.push(role);
+        this.isDirty = true;
+    }
+
+    addRole(role: Role) {
+        this.employee.roles.push(role);
+        this.allRoles.splice(this.allRoles.indexOf(role), 1);
+        this.isDirty = true;
     }
 }

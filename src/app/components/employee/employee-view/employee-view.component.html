@@ -9,15 +9,17 @@
         </mat-grid-tile>
         <mat-grid-tile [colspan]="18"></mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <button class="mat-warn" mat-raised-button (click)="deleteEmployee()" [disabled]="!employee.isActive || isEmployeeLoggedUser()">Deactivate Employee</button>
+            <button class="mat-warn" mat-raised-button (click)="deleteEmployee()"
+                    [disabled]="!employee.isActive || isEmployeeLoggedUser()">Deactivate Employee
+            </button>
         </mat-grid-tile>
     </mat-grid-list>
-
 
     <mat-grid-list cols="4" rowHeight="80px">
         <mat-grid-tile [colspan]="2" [rowspan]="1">
             <mat-form-field>
-                <input matInput [ngClass]="employee.isActive ? 'null' : 'strikethrough'" id="username" placeholder="Username" type="text" name="username"
+                <input matInput [ngClass]="employee.isActive ? 'null' : 'strikethrough'" id="username"
+                       placeholder="Username" type="text" name="username"
                        readonly [(ngModel)]="employee.userName">
             </mat-form-field>
         </mat-grid-tile>
@@ -61,18 +63,21 @@
                        [(ngModel)]="employee.workingGroup">
             </mat-form-field>
         </mat-grid-tile>
-    </mat-grid-list>
-    <mat-grid-list cols="4" rowHeight="80px">
+
+        <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <h3>Roles:</h3>
+            <mat-list>
+                <mat-list-item *ngFor="let role of employee.roles">
+                    {{role.roleType}}
+                    <mat-divider></mat-divider>
+                </mat-list-item>
+            </mat-list>
+        </mat-grid-tile>
+
         <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <mat-slide-toggle disabled  [(ngModel)]="employee.isActive" name="active">Active
+            <mat-slide-toggle disabled [(ngModel)]="employee.isActive" name="active">Active
             </mat-slide-toggle>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <mat-button-toggle-group name="roles" aria-label="Roles" multiple disabled value="1">
-                <mat-button-toggle value="0">ADMIN</mat-button-toggle>
-                <mat-button-toggle value="1">EMPLOYEE</mat-button-toggle>
-                <mat-button-toggle value="2">WAREHOUSEMAN</mat-button-toggle>
-            </mat-button-toggle-group>
-        </mat-grid-tile>
+
     </mat-grid-list>
 </div>

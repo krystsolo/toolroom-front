@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import decode from 'jwt-decode';
 import {log} from 'util';
-import {Role} from '../../models/role';
+import {RoleEnum} from '../../models/roleEnum';
 
 const TOKEN_KEY = 'AuthToken';
 const USERNAME = 'Username';
@@ -40,8 +40,8 @@ export class TokenStorage {
         return decode(TokenStorage.getToken()).scopes;
     }
 
-    public static hasUserRole(role: Role) {
-        return TokenStorage.getUserRoles().indexOf(Role[role]) !== -1;
+    public static hasUserRole(role: RoleEnum) {
+        return TokenStorage.getUserRoles().indexOf(RoleEnum[role]) !== -1;
     }
 
 }

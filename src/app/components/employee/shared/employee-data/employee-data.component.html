@@ -58,19 +58,34 @@
                        [(ngModel)]="employee.workingGroup">
             </mat-form-field>
         </mat-grid-tile>
-    </mat-grid-list>
-    <mat-grid-list cols="4" rowHeight="80px">
+
+        <mat-grid-tile [colspan]="2" [rowspan]="2">
+            <h4>Roles:</h4>
+            <mat-divider></mat-divider>
+            <mat-list>
+                <mat-list-item *ngFor="let role of employee.roles">
+                    {{role.roleType}}
+                    <button mat-icon-button *ngIf="role.id != 2" (click)="deleteRole(role)" type="button">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <mat-divider></mat-divider>
+                </mat-list-item>
+            </mat-list>
+            <mat-form-field>
+                <mat-label>Add role</mat-label>
+                <mat-select (valueChange)="addRole($event)" [disabled]="allRoles.length === 0">
+                    <mat-option *ngFor="let role of allRoles" [value]="role">
+                        {{role.roleType}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </mat-grid-tile>
+
         <mat-grid-tile [colspan]="2" [rowspan]="1">
             <mat-slide-toggle [disabled]="true" [(ngModel)]="employee.isActive" name="active">Active
             </mat-slide-toggle>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <mat-button-toggle-group name="roles" aria-label="Roles" multiple>
-                <mat-button-toggle value="ADMIN">ADMIN</mat-button-toggle>
-                <mat-button-toggle value="EMPLOYEE">EMPLOYEE</mat-button-toggle>
-                <mat-button-toggle value="WAREHOUSEMAN">WAREHOUSEMAN</mat-button-toggle>
-            </mat-button-toggle-group>
-        </mat-grid-tile>
+
     </mat-grid-list>
 
     <mat-label>Image:</mat-label>
@@ -81,7 +96,7 @@
     <mat-grid-list cols="20" rowHeight="60px">
         <mat-grid-tile [colspan]="14"></mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <button class="mat-primary" [disabled]="!f.valid || (!f.dirty && url == '')" mat-raised-button type="submit">Submit</button>
+            <button class="mat-primary" [disabled]="!f.valid || (!f.dirty && url == '' && !isDirty)" mat-raised-button type="submit">Submit</button>
         </mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="1">
             <a class="mat-warn" type="button" mat-raised-button (click)="back()">Cancel</a>

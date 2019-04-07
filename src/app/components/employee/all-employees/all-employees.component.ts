@@ -5,7 +5,7 @@ import {MatDialog, MatPaginator, MatSort, MatTableDataSource} from '@angular/mat
 import {Router} from '@angular/router';
 import {EmployeeShort} from '../../../models/employee-short';
 import {TokenStorage} from '../../../services/auth/token-storage';
-import {Role} from '../../../models/role';
+import {RoleEnum} from '../../../models/roleEnum';
 import {EmployeeShortViewComponent} from '../shared/employee-short-view-dialog/employee-short-view.component';
 
 
@@ -16,14 +16,8 @@ import {EmployeeShortViewComponent} from '../shared/employee-short-view-dialog/e
 })
 export class AllEmployeesComponent implements OnInit {
 
-    private employees: EmployeeShort[];
-    displayedColumns = ['id', 'image', 'userName', 'firstName', 'surName', 'phoneNumber',
-        'email'];
-    dataSource: MatTableDataSource<EmployeeShort>;
+    employees: EmployeeShort[];
     isDataLoaded: boolean;
-
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild(MatSort) sort: MatSort;
 
     constructor(
         public dialog: MatDialog,
@@ -31,15 +25,11 @@ export class AllEmployeesComponent implements OnInit {
         private router: Router) {
     }
 
-
     ngOnInit() {
         this.employeeService.getEmployees().subscribe(
             res => {
                 console.log(res);
                 this.employees = res;
-                this.dataSource = new MatTableDataSource(this.employees);
-                this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
                 this.isDataLoaded = true;
             },
             error => {
@@ -48,17 +38,9 @@ export class AllEmployeesComponent implements OnInit {
         );
     }
 
-    applyFilter(filterValue: string) {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-
-        if (this.dataSource.paginator) {
-            this.dataSource.paginator.firstPage();
-        }
-    }
-
     onRowClicked(employee: Employee) {
 
-        if (TokenStorage.hasUserRole(Role.ADMIN)) {
+        if (TokenStorage.hasUserRole(RoleEnum.ADMIN)) {
             this.router.navigate(['/employees/' + employee.id]);
         } else {
             this.dialog.open(EmployeeShortViewComponent, {

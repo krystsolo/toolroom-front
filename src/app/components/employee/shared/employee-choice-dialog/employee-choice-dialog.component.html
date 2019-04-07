@@ -1,0 +1,7 @@
+<div style="position: relative; right: 0;">
+    <button mat-button [mat-dialog-close]="null">
+        <mat-icon>clear</mat-icon>
+    </button>
+</div>
+
+<app-employees-table [employees]="employees" (employeeClicked)="onRowClicked($event)" [width]="'full-width'"></app-employees-table>

@@ -1,9 +1,11 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {AfterViewChecked, AfterViewInit, Component, OnInit} from '@angular/core';
 import {EmployeeService} from '../../../services/employee.service';
 import {Employee} from '../../../models/employee';
-import {ActivatedRoute, convertToParamMap, ParamMap, Route, Router} from '@angular/router';
-import {Role} from '../../../models/role';
+import {ActivatedRoute, Router} from '@angular/router';
+import {RoleEnum} from '../../../models/roleEnum';
 import {TokenStorage} from '../../../services/auth/token-storage';
+import {Observable} from 'rxjs';
+import {Role} from '../../../models/role';
 
 
 @Component({
