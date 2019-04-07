@@ -49,6 +49,15 @@
         </mat-grid-tile>
     </mat-grid-list>
 
+    <mat-grid-list cols="4" rowHeight="80px">
+        <mat-grid-tile [colspan]="4" [rowspan]="1">
+            <mat-form-field  ngClass="container">
+                <textarea matInput id="description" placeholder="Description" type="text" name="description"
+                          readonly [(ngModel)]="buyOrder.description"></textarea>
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
+
     <div>
         <h3>Tools in order:</h3>
     </div>

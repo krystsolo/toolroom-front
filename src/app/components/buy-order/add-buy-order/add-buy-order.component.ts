@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {BuyOrder, BuyOrderTool} from '../../../models/buy-order';
+import {BuyOrder} from '../../../models/buy-order';
 import {BuyOrderService} from '../../../services/buy-order.service';
 import {Router} from '@angular/router';
 

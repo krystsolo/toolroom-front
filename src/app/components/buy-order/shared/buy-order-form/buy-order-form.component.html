@@ -20,6 +20,14 @@
                    readonly [(ngModel)]="warehousemanUsername">
         </mat-grid-tile>
     </mat-grid-list>
+    <mat-grid-list cols="4" rowHeight="80px">
+        <mat-grid-tile [colspan]="4" [rowspan]="1">
+            <mat-form-field ngClass="container">
+                <textarea matInput id="description" placeholder="Description" type="text" name="description"
+                          [(ngModel)]="buyOrder.description"></textarea>
+            </mat-form-field>
+        </mat-grid-tile>
+    </mat-grid-list>
 
     <div>
         <h3>Tools in order:</h3>
@@ -37,7 +45,8 @@
         </mat-grid-tile>
         <mat-grid-tile [colspan]="1" [rowspan]="1">
             <input matInput id="toolCount" placeholder="Count" type="number" name="toolCount{{i}}"
-                   [(ngModel)]="buyOrder.buyOrderTools[i].count" [readonly]="buyOrder.buyOrderTools[i].tool.isUnique">
+                   [(ngModel)]="buyOrder.buyOrderTools[i].count" [readonly]="buyOrder.buyOrderTools[i].tool.isUnique"
+                   required min="1">
             {{buyOrderTool.tool.unitOfMeasure}}
         </mat-grid-tile>
         <mat-grid-tile [colspan]="3" [rowspan]="1"></mat-grid-tile>
@@ -62,7 +71,7 @@
     <mat-grid-list cols="20" rowHeight="60px" style="margin-top: 30px;">
         <mat-grid-tile [colspan]="10" [rowspan]="1"></mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="1">
-            <button class="mat-primary" mat-raised-button type="submit" [disabled]="!form.valid">Add Buy Order</button>
+            <button class="mat-primary" mat-raised-button type="submit" [disabled]="!form.valid || !form.dirty">Add Buy Order</button>
         </mat-grid-tile>
         <mat-grid-tile [colspan]="2" [rowspan]="1">
             <a class="mat-warn" mat-raised-button routerLink="/">Cancel</a>

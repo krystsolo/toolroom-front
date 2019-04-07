@@ -19,8 +19,6 @@ export class BuyOrderFormComponent implements OnInit {
     buyOrder: BuyOrder;
     tools: Tool[];
     warehousemanUsername: string;
-    toolsIdInOrder: number[] = new Array<number>();
-    isDataLoaded: boolean;
 
     constructor(private toolService: ToolService,
                 public dialog: MatDialog) {
@@ -31,8 +29,8 @@ export class BuyOrderFormComponent implements OnInit {
         this.toolService.getTools().subscribe(
             res => {
                 console.log(res);
-                this.tools = res;
-                this.isDataLoaded = true;
+                this.tools = res.filter(tool => !this.buyOrder.buyOrderTools
+                    .map(value => value.tool.id).includes(tool.id));
             },
             error => {
                 console.log(error);
@@ -41,7 +39,6 @@ export class BuyOrderFormComponent implements OnInit {
     }
 
     addNewBuyOrderTool() {
-        console.log('add new buy order tool' + this.toolsIdInOrder);
         this.dialog.open(ToolChoiceDialogComponent, {
             data: {tools: this.tools},
             height: '1000px',
@@ -54,6 +51,7 @@ export class BuyOrderFormComponent implements OnInit {
     delete(buyOrderTool: BuyOrderTool) {
         const index = this.buyOrder.buyOrderTools.indexOf(buyOrderTool);
         this.buyOrder.buyOrderTools.splice(index, 1);
+        console.log(this.buyOrder.buyOrderTools);
         this.tools.push(buyOrderTool.tool);
     }
 
@@ -63,13 +61,9 @@ export class BuyOrderFormComponent implements OnInit {
 
     private addBuyOrderToolToBuyOrder(addedTool: Tool): void {
         if (addedTool != null) {
-            this.tools = this.tools.filter(tool => tool.id !== addedTool.id);
-            let count = 0;
-            if (addedTool.isUnique) {
-                count = 1;
-            }
-            const buyOrderTool: BuyOrderTool = {id: null, tool: addedTool, count: count};
+            const buyOrderTool: BuyOrderTool = {id: null, tool: addedTool, count: 1};
             this.buyOrder.buyOrderTools.push(buyOrderTool);
+            this.tools.splice(this.tools.indexOf(addedTool), 1);
         }
     }
 }

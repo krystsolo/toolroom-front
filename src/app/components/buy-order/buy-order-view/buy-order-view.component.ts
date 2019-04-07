@@ -58,12 +58,12 @@ export class BuyOrderViewComponent implements OnInit {
         this.buyOrderService.deleteBuyOrder(this.buyOrder.id).subscribe(
             res => {
                 console.log(res);
+                this.router.navigate(['/buyorders/']);
             },
             err => {
                 console.log(err);
             }
         );
-        this.router.navigate(['/buyorders/']);
     }
 
     showWarehousemanDialog() {
