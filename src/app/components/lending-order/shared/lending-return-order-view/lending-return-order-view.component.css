@@ -1,0 +1,3 @@
+::ng-deep .mat-tooltip  {
+    max-width: 110px !important;
+}

@@ -1,0 +1,131 @@
+<div class="container" *ngIf="isDataLoaded">
+    <h2 style="margin-top: 30px">Return lending order </h2>
+    <form (ngSubmit)="onSubmit()" #form="ngForm">
+
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="4" [rowspan]="1">
+                <mat-form-field>
+                    <input matInput id="orderCode" placeholder="Order code" type="text" name="orderCode" [disabled]="true"
+                           required [(ngModel)]="lendingReturnOrder.orderNumber">
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <mat-grid-list cols="4" rowHeight="80px">
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <h4>Worker: *</h4>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <a (click)="showEmployeeDialog(worker)" ngClass="dialog-run-text">
+                        {{worker?.userName}}
+                    </a>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <h4>Warehouseman:</h4>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <input matInput id="warehousemanUsername" placeholder="" type="text" name="warehousemanUsername"
+                       readonly [(ngModel)]="warehousemanUsername">
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="6" rowHeight="80px">
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <h4>Add date:</h4>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                {{lendingReturnOrder.pickTime}}
+            </mat-grid-tile>
+
+            <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+            <mat-grid-tile [colspan]="3" [rowspan]="1">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="Return until" [readonly]="true"
+                           [value]="lendingReturnOrder.returnUntilTime" name="returnUntil">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker [disabled]="true"></mat-datepicker>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <h4>Edit date:</h4>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                {{lendingReturnOrder.editTime}}
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+            <mat-grid-tile [colspan]="6" [rowspan]="1">
+                <mat-form-field ngClass="container">
+                <textarea matInput id="description" placeholder="Description" type="text" name="description"
+                          [(ngModel)]="lendingReturnOrder.description"></textarea>
+                </mat-form-field>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+        <div>
+            <h3>Tools in order:</h3>
+        </div>
+
+        <mat-grid-list cols="10" rowHeight="60px"
+                       *ngFor="let lendingReturnOrderTool of lendingReturnOrder.lendingReturnOrderTools; let i = index">
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <h4>{{lendingReturnOrderTool.tool.id}}</h4>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <h4>{{lendingReturnOrderTool.tool.name}}</h4>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <app-tool-image [toolId]="lendingReturnOrderTool.tool.id" [width]="50" [height]="50"></app-tool-image>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <input matInput id="toolCount" placeholder="Count" type="number" name="toolCount{{i}}"
+                       [(ngModel)]="lendingReturnOrder.lendingReturnOrderTools[i].count"
+                       [readonly]="lendingReturnOrder.lendingReturnOrderTools[i].tool.isUnique"
+                       required min="1">
+                {{lendingReturnOrderTool.tool.unitOfMeasure}}
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <div *ngIf="lendingReturnOrderTool.isReturned">
+                    <mat-icon color="primary" class="material-icons mat-36">done</mat-icon>
+                </div>
+                <div *ngIf="!lendingReturnOrderTool.isReturned">
+                    <mat-icon color="warn" class="material-icons mat-36">clear</mat-icon>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1" >
+                <button mat-icon-button type="button" (click)="returnTool(lendingReturnOrderTool)" [disabled]="lendingReturnOrderTool.isReturned">
+                    <mat-icon>play_arrow</mat-icon>
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1" >
+                <button mat-icon-button type="button" (click)="undoReturnTool(lendingReturnOrderTool)" [disabled]="!lendingReturnOrderTool.isReturned" >
+                    <mat-icon>replay</mat-icon>
+                </button>
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="10" rowHeight="60px">
+            <mat-grid-tile [colspan]="8" [rowspan]="1"></mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <div>
+                    Return all
+                </div>
+                <button mat-icon-button type="button" (click)="returnAll()">
+                    <mat-icon>fast_forward</mat-icon>
+                </button>
+
+            </mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list cols="20" rowHeight="60px" style="margin-top: 30px;">
+            <mat-grid-tile [colspan]="10" [rowspan]="1"></mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <button class="mat-primary" mat-raised-button type="submit"
+                        [disabled]="!form.valid || !form.dirty "> Submit
+                </button>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+                <a class="mat-warn" mat-raised-button routerLink="/">Cancel</a>
+            </mat-grid-tile>
+        </mat-grid-list>
+
+    </form>
+
+</div>
