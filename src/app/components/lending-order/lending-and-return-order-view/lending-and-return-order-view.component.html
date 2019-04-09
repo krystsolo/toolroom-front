@@ -1,0 +1,15 @@
+<mat-tab-group>
+    <mat-tab label="Order">
+
+            <app-lending-order-view (employeeNameClicked)="showWarehousemanDialog($event)" (enableReturnTab)="setReturnId($event)" ></app-lending-order-view>
+
+    </mat-tab>
+    <mat-tab label="Return" [disabled]="id == null">
+        <div *ngIf="id != null">
+            <app-lending-return-order-view
+                (employeeNameClicked)="showWarehousemanDialog($event)" [id]="id">
+
+            </app-lending-return-order-view>
+        </div>
+    </mat-tab>
+</mat-tab-group>
