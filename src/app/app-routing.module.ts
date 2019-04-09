@@ -16,7 +16,17 @@ import {AllBuyOrdersComponent} from './components/buy-order/all-buy-orders/all-b
 import {BuyOrderViewComponent} from './components/buy-order/buy-order-view/buy-order-view.component';
 import {EditBuyOrderComponent} from './components/buy-order/edit-buy-order/edit-buy-order.component';
 import { RoleGuardService as RoleGuard } from './services/auth/role-guard.service';
-import {Role} from './models/role';
+import {RoleEnum} from './models/roleEnum';
+import {AddDestructionOrderComponent} from './components/destruction-order/add-destruction-order/add-destruction-order.component';
+import {ViewDestructionOrderComponent} from './components/destruction-order/view-destruction-order/view-destruction-order.component';
+import {EditDestructionOrderComponent} from './components/destruction-order/edit-destruction-order/edit-destruction-order.component';
+import {AllDestructionOrderComponent} from './components/destruction-order/all-destruction-order/all-destruction-order.component';
+import {LendingOrderAddComponent} from './components/lending-order/lending-order-add/lending-order-add.component';
+import {LendingOrdersListComponent} from './components/lending-order/lending-orders-list/lending-orders-list.component';
+import {LendingAndReturnOrderViewComponent} from './components/lending-order/lending-and-return-order-view/lending-and-return-order-view.component';
+import {LendingOrderEditComponent} from './components/lending-order/lending-order-edit/lending-order-edit.component';
+import {LendingReturnsListComponent} from './components/lending-order/lending-returns-list/lending-returns-list.component';
+import {LendingReturnEditComponent} from './components/lending-order/lending-return-edit/lending-return-edit.component';
 
 const routes: Routes = [
     {
@@ -37,7 +47,7 @@ const routes: Routes = [
         component: AddEmployeeComponent,
         canActivate: [RoleGuard],
         data: {
-            role: Role[Role.ADMIN]
+            role: RoleEnum[RoleEnum.ADMIN]
         }
     },
     {
@@ -49,7 +59,7 @@ const routes: Routes = [
         component: EmployeeViewComponent,
         canActivate: [RoleGuard],
         data: {
-            role: Role[Role.ADMIN]
+            role: RoleEnum[RoleEnum.ADMIN]
         }
     },
     {
@@ -57,7 +67,7 @@ const routes: Routes = [
         component: EmployeeEditComponent,
         canActivate: [RoleGuard],
         data: {
-            role: Role[Role.ADMIN]
+            role: RoleEnum[RoleEnum.ADMIN]
         }
     },
     {
@@ -65,7 +75,7 @@ const routes: Routes = [
         component: AddToolComponent,
         canActivate: [RoleGuard],
         data: {
-            role: Role[Role.WAREHOUSEMAN]
+            role: RoleEnum[RoleEnum.WAREHOUSEMAN]
         }
     },
     {
@@ -81,7 +91,7 @@ const routes: Routes = [
         component: UpdateToolComponent,
         canActivate: [RoleGuard],
         data: {
-            role: Role[Role.WAREHOUSEMAN]
+            role: RoleEnum[RoleEnum.WAREHOUSEMAN]
         }
     },
     {
@@ -89,7 +99,7 @@ const routes: Routes = [
         component: CategoryComponent,
         canActivate: [RoleGuard],
         data: {
-            role: Role[Role.WAREHOUSEMAN]
+            role: RoleEnum[RoleEnum.WAREHOUSEMAN]
         }
     },
     {
@@ -97,7 +107,7 @@ const routes: Routes = [
         component: AddBuyOrderComponent,
         canActivate: [RoleGuard],
         data: {
-            role: Role[Role.WAREHOUSEMAN]
+            role: RoleEnum[RoleEnum.WAREHOUSEMAN]
         }
     },
     {
@@ -113,7 +123,67 @@ const routes: Routes = [
         component: EditBuyOrderComponent,
         canActivate: [RoleGuard],
         data: {
-            role: Role[Role.WAREHOUSEMAN]
+            role: RoleEnum[RoleEnum.WAREHOUSEMAN]
+        }
+    },
+    {
+        path: 'destructionorders/add',
+        component: AddDestructionOrderComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: RoleEnum[RoleEnum.WAREHOUSEMAN]
+        }
+    },
+    {
+        path: 'destructionorders',
+        component: AllDestructionOrderComponent
+    },
+    {
+        path: 'destructionorders/:id',
+        component: ViewDestructionOrderComponent
+    },
+    {
+        path: 'destructionorders/:id/update',
+        component: EditDestructionOrderComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: RoleEnum[RoleEnum.WAREHOUSEMAN]
+        }
+    },
+    {
+        path: 'lendingorders/add',
+        component: LendingOrderAddComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: RoleEnum[RoleEnum.WAREHOUSEMAN]
+        }
+    },
+    {
+        path: 'lendingorders',
+        component: LendingOrdersListComponent
+    },
+    {
+        path: 'lendingorders/:id',
+        component: LendingAndReturnOrderViewComponent
+    },
+    {
+        path: 'lendingorders/:id/update',
+        component: LendingOrderEditComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: RoleEnum[RoleEnum.WAREHOUSEMAN]
+        }
+    },
+    {
+        path: 'lendingreturnorders',
+        component: LendingReturnsListComponent
+    },
+    {
+        path: 'lendingreturnorders/:id',
+        component: LendingReturnEditComponent,
+        canActivate: [RoleGuard],
+        data: {
+            role: RoleEnum[RoleEnum.WAREHOUSEMAN]
         }
     }
 ];

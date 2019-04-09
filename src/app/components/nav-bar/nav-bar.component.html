@@ -1,10 +1,49 @@
 <mat-toolbar class="mat-primary">
-  <h2>TOOLROOM APP</h2>
+    <h2>
+        <span *ngIf="isLoggedIn">
+            <a (click)="toMainPage()">TOOLROOM APP</a>
+        </span>
+        <span *ngIf="!isLoggedIn">TOOLROOM APP</span>
+    </h2>
 
-  <span class="align-right"></span>
+    <span class="align-right"></span>
+
+    <h4>
+        Hello
+        {{username}}!
+    </h4>
+    <span [hidden]="!isLoggedIn">
+            <button mat-button [matMenuTriggerFor]="lendingOrders">Lending Orders</button>
+  </span>
+    <mat-menu #lendingOrders="matMenu">
+        <a mat-menu-item routerLink="lendingorders">Order list</a>
+        <a mat-menu-item routerLink="lendingreturnorders">Return list</a>
+        <span *ngIf="isWarehouseman">
+             <a mat-menu-item routerLink="lendingorders/add">Add order</a>
+        </span>
+    </mat-menu>
 
     <span [hidden]="!isLoggedIn">
-      <button mat-button [matMenuTriggerFor]="buyOrders">Buy Orders</button>
+        <span *ngIf="isWarehouseman">
+            <button mat-button [matMenuTriggerFor]="destructionOrders">Destruction Orders</button>
+        </span>
+        <span *ngIf="!isWarehouseman">
+            <button mat-button routerLink="destructionorders">Destruction Orders</button>
+        </span>
+  </span>
+    <mat-menu #destructionOrders="matMenu">
+        <a mat-menu-item routerLink="destructionorders">Order list</a>
+        <a mat-menu-item routerLink="destructionorders/add">Add destruction order</a>
+    </mat-menu>
+
+    <span [hidden]="!isLoggedIn">
+        <span *ngIf="isWarehouseman">
+            <button mat-button [matMenuTriggerFor]="buyOrders">Buy Orders</button>
+        </span>
+        <span *ngIf="!isWarehouseman">
+            <button mat-button routerLink="buyorders">Buy Orders</button>
+        </span>
+
   </span>
     <mat-menu #buyOrders="matMenu">
         <a mat-menu-item routerLink="buyorders">Buy order list</a>
@@ -13,22 +52,33 @@
 
 
     <span [hidden]="!isLoggedIn">
-      <button mat-button [matMenuTriggerFor]="tools">Tools</button>
+        <span *ngIf="isWarehouseman">
+            <button mat-button [matMenuTriggerFor]="tools">Tools</button>
+        </span>
+        <span *ngIf="!isWarehouseman">
+            <button mat-button routerLink="tools">Tools</button>
+        </span>
   </span>
-
     <mat-menu #tools="matMenu">
         <a mat-menu-item routerLink="tools">Tool list</a>
         <a mat-menu-item routerLink="tools/add">Add tool</a>
         <a mat-menu-item routerLink="categories">Categories</a>
     </mat-menu>
 
-  <span [hidden]="!isLoggedIn">
-      <button mat-button [matMenuTriggerFor]="employees">Employees</button>
+    <span [hidden]="!isLoggedIn">
+        <span *ngIf="isAdmin">
+             <button mat-button [matMenuTriggerFor]="employees">Employees</button>
+        </span>
+        <span *ngIf="!isAdmin">
+             <button mat-button routerLink="employees">Employees</button>
+        </span>
   </span>
-  <mat-menu #employees="matMenu">
-      <a mat-menu-item routerLink="employees">Employee list</a>
-      <a mat-menu-item routerLink="employees/add">Add employee</a>
-  </mat-menu>
+    <mat-menu #employees="matMenu">
+        <a mat-menu-item routerLink="employees">Employee list</a>
+        <a mat-menu-item routerLink="employees/add">Add employee</a>
+    </mat-menu>
 
-  <span [hidden]="!isLoggedIn"><a mat-button (click)="logout()">Logout</a></span>
+    <span [hidden]="!isLoggedIn">
+        <a mat-button (click)="logout()">Logout</a>
+    </span>
 </mat-toolbar>

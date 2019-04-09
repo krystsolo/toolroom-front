@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {EmployeeShort} from '../../../models/employee-short';
-import {BuyOrderService} from '../../../services/buy-order.service';
 import {EmployeeService} from '../../../services/employee.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MatDialog} from '@angular/material';
 import {EmployeeShortViewComponent} from '../../employee/shared/employee-short-view-dialog/employee-short-view.component';
 import {DestructionOrder} from '../../../models/destruction-order';
 import {DestructionOrderService} from '../../../services/destruction-order.service';
+import {TokenStorage} from '../../../services/auth/token-storage';
+import {RoleEnum} from '../../../models/roleEnum';
 
 @Component({
   selector: 'app-view-destruction-order',
@@ -19,6 +20,7 @@ export class ViewDestructionOrderComponent implements OnInit {
         orderCode: '', destructionOrderTools: [], warehousemanId: null, description: '', addTimestamp: null, editTimestamp: null
     };
     warehouseman: EmployeeShort;
+    isWarehouseman: boolean;
 
     constructor(private destructionOrderService: DestructionOrderService,
                 private employeeService: EmployeeService,
@@ -28,6 +30,7 @@ export class ViewDestructionOrderComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.isWarehouseman = TokenStorage.hasUserRole(RoleEnum.WAREHOUSEMAN);
         this.destructionOrderService.getDestructionOrder(this.getDestructionOrderIdFromUrl()).subscribe(
             res => {
                 this.destructionOrder = res;
