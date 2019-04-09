@@ -46,3 +46,5 @@ mat-button-toggle-group{
     color: dodgerblue;
     text-decoration-line: underline;
 }
+
+.material-icons.mat-36 { font-size: 36px; }

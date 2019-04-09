@@ -1,0 +1,7 @@
+<div class="container">
+    <h2 style="margin-top: 30px">Edit lending order </h2>
+    <div *ngIf="lendingOrder != null">
+        <app-lending-order-form (lendingOrderSave)="onSubmit($event)"
+                                [lendingOrder]="lendingOrder" [worker]="worker"></app-lending-order-form>
+    </div>
+</div>
