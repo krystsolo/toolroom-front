@@ -33,6 +33,8 @@ export class LendingOrderFormComponent implements OnInit {
     employees: EmployeeShort[];
     minDate: Date = new Date();
 
+    hasOrderToReturnTool: boolean;
+
     constructor(private toolService: ToolService,
                 public dialog: MatDialog,
                 private employeeService: EmployeeService) {
@@ -72,6 +74,7 @@ export class LendingOrderFormComponent implements OnInit {
         this.lendingOrder.lendingOrderTools.splice(index, 1);
         console.log(this.lendingOrder.lendingOrderTools);
         this.tools.push(lendingOrderTool.tool);
+        this.hasOrderToReturnTool = this.isInOrderAnyToolToReturn();
     }
 
     onSubmit() {
@@ -83,7 +86,12 @@ export class LendingOrderFormComponent implements OnInit {
             const lendingOrderTool: LendingOrderTool = {id: null, tool: addedTool, count: 1};
             this.lendingOrder.lendingOrderTools.push(lendingOrderTool);
             this.tools.splice(this.tools.indexOf(addedTool), 1);
+            this.hasOrderToReturnTool = this.isInOrderAnyToolToReturn();
         }
+    }
+
+    private isInOrderAnyToolToReturn(): boolean {
+        return this.lendingOrder.lendingOrderTools.filter(l => l.tool.isToReturn).length > 0;
     }
 
     addWorker() {

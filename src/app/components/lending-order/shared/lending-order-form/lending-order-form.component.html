@@ -39,7 +39,7 @@
         <mat-grid-tile [colspan]="2" [rowspan]="1">
             <mat-form-field>
                 <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Warranty date"
-                       [(ngModel)]="lendingOrder.returnUntilTime" name="warrantyDate">
+                       [(ngModel)]="lendingOrder.returnUntilTime" name="warrantyDate" [required]="hasOrderToReturnTool">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
