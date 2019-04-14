@@ -118,7 +118,7 @@
             <mat-grid-tile [colspan]="10" [rowspan]="1"></mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="1">
                 <button class="mat-primary" mat-raised-button type="submit"
-                        [disabled]="!form.valid || !form.dirty "> Submit
+                        [disabled]="(!form.valid || !form.dirty) && !isReturnOptionChanged"> Submit
                 </button>
             </mat-grid-tile>
             <mat-grid-tile [colspan]="2" [rowspan]="1">

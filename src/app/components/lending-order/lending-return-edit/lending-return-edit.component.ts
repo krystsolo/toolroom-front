@@ -24,6 +24,7 @@ export class LendingReturnEditComponent implements OnInit {
     warehousemanUsername: string;
     worker: EmployeeShort;
     isDataLoaded: boolean;
+    isReturnOptionChanged: boolean;
 
     constructor(public dialog: MatDialog,
                 private lendingOrderService: LendingOrderService,
@@ -74,10 +75,12 @@ export class LendingReturnEditComponent implements OnInit {
         this.lendingReturnOrder.lendingReturnOrderTools
             .filter(l => l.id === lendingReturnOrderTool.id)
             .forEach(l => l.isReturned = true);
+        this.isReturnOptionChanged = true;
     }
 
     returnAll() {
         this.lendingReturnOrder.lendingReturnOrderTools.forEach(l => l.isReturned = true);
+        this.isReturnOptionChanged = true;
     }
 
     undoReturnTool(lendingReturnOrderTool: LendingReturnOrderTool) {
