@@ -14,17 +14,10 @@ import {RoleEnum} from '../../../models/roleEnum';
 export class LendingReturnsListComponent implements OnInit {
 
 
-    private lendingReturnOrders: LendingReturnOrder[];
-    displayedColumns = ['id', 'orderNumber', 'pickTime', 'workerId', 'warehousemanId', 'returnUntilTime',
-        'description'];
-    dataSource: MatTableDataSource<LendingReturnOrder>;
-
-    @ViewChild(MatPaginator) paginator: MatPaginator;
-    @ViewChild(MatSort) sort: MatSort;
+    lendingReturnOrders: LendingReturnOrder[];
 
     constructor(
-        private lendingOrderService: LendingOrderService,
-        private router: Router) {
+        private lendingOrderService: LendingOrderService) {
     }
 
     ngOnInit() {
@@ -32,31 +25,10 @@ export class LendingReturnsListComponent implements OnInit {
             res => {
                 console.log(res);
                 this.lendingReturnOrders = res;
-                this.dataSource = new MatTableDataSource(this.lendingReturnOrders);
-                this.dataSource.paginator = this.paginator;
-                this.dataSource.sort = this.sort;
             },
             error => {
                 console.log(error);
             }
         );
     }
-
-    applyFilter(filterValue: string) {
-        this.dataSource.filter = filterValue.trim().toLowerCase();
-
-        if (this.dataSource.paginator) {
-            this.dataSource.paginator.firstPage();
-        }
-    }
-
-    onRowClicked(lendingReturnOrder: LendingReturnOrder) {
-        if (TokenStorage.hasUserRole(RoleEnum.WAREHOUSEMAN)) {
-            this.router.navigate(['/lendingreturnorders/' + lendingReturnOrder.id]);
-        } else {
-            this.router.navigate(['/lendingorders/' + lendingReturnOrder.lendingOrderId]);
-        }
-
-    }
-
 }
