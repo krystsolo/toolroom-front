@@ -16,8 +16,8 @@ export class ToolService {
     constructor(private http: HttpClient, private sanitizer: DomSanitizer) {
     }
 
-    getTools(httpParams?: HttpParams): Observable<Tool[]> {
-        return this.http.get<Tool[]>(this.baseUrl, {params: httpParams});
+    getTools(data?: any): Observable<Tool[]> {
+        return this.http.get<Tool[]>(this.baseUrl, {params: data});
     }
 
     getTool(id: number): Observable<Tool> {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {LendingOrder} from '../models/lending-order';
 import {LendingReturnOrder} from '../models/lending-return-order';
@@ -44,12 +44,13 @@ export class LendingOrderService {
         return this.http.get<LendingReturnOrder>(url);
     }
 
-    getLendingReturnOrders(): Observable<LendingReturnOrder[]> {
-        return this.http.get<LendingReturnOrder[]>(this.returnUrl);
+    getLendingReturnOrders(data?: any): Observable<LendingReturnOrder[]> {
+        return this.http.get<LendingReturnOrder[]>(this.returnUrl, {params: data});
     }
 
     makeReturnOfLendingOrder(lendingReturnOrderId: number, lendingReturnOrder: LendingReturnOrder): Observable<LendingReturnOrder> {
         const url = this.returnUrl + '/' + lendingReturnOrderId ;
         return this.http.put<LendingReturnOrder>(url, lendingReturnOrder);
     }
+
 }

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {Tool} from '../../../../models/tool';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {ToolService} from '../../../../services/tool.service';
@@ -8,7 +8,8 @@ import {container} from '@angular/core/src/render3';
 @Component({
     selector: 'app-tool-table',
     templateUrl: './tool-table.component.html',
-    styleUrls: ['./tool-table.component.css']
+    styleUrls: ['./tool-table.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ToolTableComponent implements OnInit {
 

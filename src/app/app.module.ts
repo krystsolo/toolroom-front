@@ -54,6 +54,10 @@ import { LendingReturnEditComponent } from './components/lending-order/lending-r
 import { LendingOrderFormComponent } from './components/lending-order/shared/lending-order-form/lending-order-form.component';
 import { EmployeeChoiceDialogComponent } from './components/employee/shared/employee-choice-dialog/employee-choice-dialog.component';
 import { EmployeesTableComponent } from './components/employee/shared/employees-table/employees-table.component';
+import { NotReturnedOnTimeComponent } from './components/dashboard/dashboard/not-returned-on-time/not-returned-on-time.component';
+import { ToolShortagesComponent } from './components/dashboard/dashboard/tool-shortages/tool-shortages.component';
+import { ToolCloseWarrantyDateComponent } from './components/dashboard/dashboard/tool-close-warranty-date/tool-close-warranty-date.component';
+import { LendingReturnTableComponent } from './components/lending-order/shared/lending-return-table/lending-return-table.component';
 
 
 @NgModule({
@@ -98,7 +102,11 @@ import { EmployeesTableComponent } from './components/employee/shared/employees-
         LendingReturnEditComponent,
         LendingOrderFormComponent,
         EmployeeChoiceDialogComponent,
-        EmployeesTableComponent
+        EmployeesTableComponent,
+        NotReturnedOnTimeComponent,
+        ToolShortagesComponent,
+        ToolCloseWarrantyDateComponent,
+        LendingReturnTableComponent
     ],
 
     entryComponents: [

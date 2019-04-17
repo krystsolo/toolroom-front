@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LendingOrderService} from '../../../services/lending-order.service';
 
 @Component({
   selector: 'app-dashboard',
