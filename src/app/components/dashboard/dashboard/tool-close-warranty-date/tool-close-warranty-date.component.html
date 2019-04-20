@@ -1,7 +1,9 @@
-
-<mat-radio-group aria-label="Select warranty period" (change)="changeOption($event)" [value]="warrantyChosen">
-    <mat-radio-button *ngFor="let warranty of warrantyDate" [value]="warranty">{{warranty}}</mat-radio-button>
-</mat-radio-group>
+<div style="position: absolute; right: 20%;">
+    <mat-radio-group align="center" aria-label="Select warranty period" (change)="changeOption($event.value)"
+                     [value]="warrantyChosen">
+        <mat-radio-button *ngFor="let warranty of warrantyDate" [value]="warranty">{{warranty}}</mat-radio-button>
+    </mat-radio-group>
+</div>
 <div *ngIf="isDataLoaded">
     <app-tool-table [tools]="tools" (toolClicked)="onRowClicked($event)"></app-tool-table>
 </div>
