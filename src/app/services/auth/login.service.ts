@@ -16,7 +16,7 @@ export class LoginService {
     attemptAuth(username: string, password: string) {
         const credentials = {username: username, password: password};
         const url = this.baseUrl + 'generate-token';
-
+        console.log(url);
         console.log('auth Attempt');
 
         return this.http.post<any>(url, credentials);

@@ -28,7 +28,7 @@ export class TokenStorage {
     }
 
     public static isAuthenticated(): boolean {
-        return TokenStorage.getToken() != null;
+        return !!TokenStorage.getToken();
     }
 
     public static getLoggedUsername(): string {
@@ -37,7 +37,10 @@ export class TokenStorage {
 
     public static getUserRoles(): Array<string> {
         log(decode(TokenStorage.getToken()).scopes);
-        return decode(TokenStorage.getToken()).scopes;
+        if (TokenStorage.getToken()) {
+            return decode(TokenStorage.getToken()).scopes;
+        }
+        return new Array<string>();
     }
 
     public static hasUserRole(role: RoleEnum) {

@@ -34,7 +34,7 @@ export class ToolViewComponent implements OnInit {
         );
     }
 
-    private getToolIdFromUrl(): number {
+    getToolIdFromUrl(): number {
         return Number(this.route.snapshot.paramMap.get('id'));
     }
 

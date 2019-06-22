@@ -1,10 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {LendingOrderService} from '../../../services/lending-order.service';
-import {Router} from '@angular/router';
 import {LendingReturnOrder} from '../../../models/lending-return-order';
-import {TokenStorage} from '../../../services/auth/token-storage';
-import {RoleEnum} from '../../../models/roleEnum';
 
 @Component({
   selector: 'app-lending-returns-list',
@@ -15,6 +11,7 @@ export class LendingReturnsListComponent implements OnInit {
 
 
     lendingReturnOrders: LendingReturnOrder[];
+    isDataLoaded: boolean;
 
     constructor(
         private lendingOrderService: LendingOrderService) {
@@ -25,6 +22,7 @@ export class LendingReturnsListComponent implements OnInit {
             res => {
                 console.log(res);
                 this.lendingReturnOrders = res;
+                this.isDataLoaded = true;
             },
             error => {
                 console.log(error);

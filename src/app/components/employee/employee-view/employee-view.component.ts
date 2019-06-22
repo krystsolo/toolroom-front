@@ -56,7 +56,7 @@ export class EmployeeViewComponent implements OnInit {
         return this.employee.userName === TokenStorage.getLoggedUsername();
     }
 
-    private getEmployeeIdFromUrl(): number {
+    getEmployeeIdFromUrl(): number {
         return Number.parseInt(this.route.snapshot.paramMap.get('id'), 10);
     }
 }
